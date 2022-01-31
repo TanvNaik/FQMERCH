@@ -15,7 +15,7 @@
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 	<!-- Site Title -->
-	<title>Karma Shop</title>
+	<title>FQ-Merch</title>
 	<!--
 		CSS
 		============================================= -->
@@ -56,10 +56,7 @@
 								 aria-expanded="false">Shop</a>
 								<ul class="dropdown-menu">
 									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.category')}}">Shop Category</a></li>
-									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.singleproduct')}}">Product Details</a></li>
-									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.checkout')}}">Product Checkout</a></li>
 									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.cart')}}">Shopping Cart</a></li>
-									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.confirmation')}}">Confirmation</a></li>
 								</ul>
 							</li>
 							<li class="nav-item submenu dropdown">
@@ -72,7 +69,7 @@
 							</li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Pages</a>
+								 aria-expanded="false">Account</a>
 								<ul class="dropdown-menu">
 									{% if session['login'] %}
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.logout')}}">Logout</a></li>
@@ -81,9 +78,9 @@
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.register')}}">Register</a></li>
 									{% endif %}
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.tracking')}}">Tracking</a></li>
-									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.elements')}}">Elements</a></li>
 								</ul>
 							</li>
+							<li class="nav-item"><a class="nav-link" href="{{url_for('contact')}}">About</a></li>
 							<li class="nav-item"><a class="nav-link" href="{{url_for('contact')}}">Contact</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">

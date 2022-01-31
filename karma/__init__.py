@@ -43,10 +43,12 @@ def send_email(user, pwd, recipient, subject, body):
 from karma.shop.views import shop
 from karma.blog.views import blog
 from karma.pages.views import pages
+from karma.additem.views import additem
 
 app.register_blueprint(shop)
 app.register_blueprint(blog)
 app.register_blueprint(pages)
+app.register_blueprint(additem)
 
 # @app.route('/')
 # def index():
