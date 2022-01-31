@@ -55,6 +55,6 @@ def subscribe():
         return render_template('contact.html')
 
     else:
-        send_email(sender_email, email_pass, email, "ThankYou", "Thankyou For subscribing NewsLetter")
+        send_email("info@stackx.online", "StackX@123", email, "ThankYou", "Thankyou For subscribing NewsLetter")
         return render_template('index.html')
 
