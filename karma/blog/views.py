@@ -10,3 +10,7 @@ def blogs():
 @blog.route('/singleblog')
 def singleblog():
     return render_template('singleblog.html')
+
+@blog.route('/')
+def index():
+    return render_template('index.html')

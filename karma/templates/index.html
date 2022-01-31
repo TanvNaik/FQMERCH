@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if session['login'] %}
+    <h1>Hello You Are Logged In , We Welcomes You !</h1>
+{% else %}
+<h1>Hello You are Not Logged In !</h1>
+{% endif %}
 
 <!-- start banner Area -->
 <section class="banner-area section_gap">

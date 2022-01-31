@@ -1,13 +1,26 @@
 from flask import Flask, render_template, request
 import smtplib
 import os 
+import pyrebase
+
+firebaseConfiguration = {
+"apiKey": "AIzaSyAlzqAG9Ag670HIBzzjnIum6zpnk0o80t8",
+  "authDomain": "ecommerce-flask.firebaseapp.com",
+  "projectId": "ecommerce-flask",
+  "storageBucket": "ecommerce-flask.appspot.com",
+  "messagingSenderId": "180291136079",
+  "appId": "1:180291136079:web:61b4affc41900d387c183a",
+  "measurementId": "G-9C493M27G0",
+  "databaseURL": "https://ecommerce-flask-default-rtdb.firebaseio.com/"
+}
+firebase = pyrebase.initialize_app(firebaseConfiguration)
+auth = firebase.auth()
+db = firebase.database()
+storage = firebase.storage()
 
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("secretKey")
-
-sender_email = os.environ.get('senderEmail')
-email_pass = os.environ.get('emailPass')
+app.secret_key = "mysecretkey"
 
 
 def send_email(user, pwd, recipient, subject, body):
@@ -35,9 +48,9 @@ app.register_blueprint(shop)
 app.register_blueprint(blog)
 app.register_blueprint(pages)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
 
 @app.route('/contact')
 def contact():

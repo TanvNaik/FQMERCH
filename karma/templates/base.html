@@ -74,7 +74,12 @@
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">Pages</a>
 								<ul class="dropdown-menu">
+									{% if session['login'] %}
+									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.logout')}}">Logout</a></li>
+									{% else %}
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.login')}}">Login</a></li>
+									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.register')}}">Register</a></li>
+									{% endif %}
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.tracking')}}">Tracking</a></li>
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.elements')}}">Elements</a></li>
 								</ul>
