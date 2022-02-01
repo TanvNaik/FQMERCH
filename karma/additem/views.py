@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, url_for
+from flask import render_template, Blueprint, url_for, session, jsonify, request, redirect
 from karma import db
 from datetime import datetime
 import random
@@ -26,14 +26,26 @@ def add():
             'time': now
         }
         if form.image.data:
-            print("Image comes")
             pic = add_pic(form.image.data, form.productname.data)
         picture = url_for('static', filename='category/'+pic)
         item['image'] = picture
         id = random.randint(100000, 1000000000)
-        db.child("products").child(item['productcategory']).child(id).set(item)
+        db.child("products").child(id).set(item)
 
     return render_template('product.html', form=form)
 
 
+@additem.route('/addtocart', methods=["POST","GET"])
+def addtocart():
+    productid = request.form['productid']
+    userid = session['id']
+    data = db.child("products").child(productid).get().val()
+    db.child("cart").child(userid).child(productid).set(data)
+    return redirect(url_for('shop.cart'))
 
+@additem.route('/deletefromcart', methods=["POST","GET"])
+def deletefromcart():
+    productid = request.form['productid']
+    userid = session['id']
+    db.child("cart").child(userid).child(productid).remove()
+    return redirect(url_for('shop.cart'))

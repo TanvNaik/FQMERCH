@@ -7,6 +7,7 @@
 <h1>Hello You are Not Logged In !</h1>
 {% endif %}
 
+
 <!-- start banner Area -->
 <section class="banner-area section_gap">
     <div class="container">
@@ -147,23 +148,25 @@
             </div>
             <div class="row">
                 <!-- single product -->
-        {% for items in products %}
-            {% for item in products[items] %}
-                {% if products[items][item]["type"] == "latest" %}
+            {% for item in products %}
+                {% if products[item]["type"] == "latest" %}
                 <div class="col-lg-3 col-md-6">
                     <div class="single-product">
-                        <img class="img-fluid" src="..{{products[items][item]["image"]}}" alt="">
+                        <img class="img-fluid" src="..{{products[item]["image"]}}" alt="">
                         <div class="product-details">
-                            <h6>{{products[items][item]["productname"]}}</h6>
+                            <h6>{{products[item]["productname"]}}</h6>
                             <div class="price">
-                                <h6>${{products[items][item]["price"]}}</h6>
-                                <h6 class="l-through">${{products[items][item]["originalprice"]}}</h6>
+                                <h6>${{products[item]["price"]}}</h6>
+                                <h6 class="l-through">${{products[item]["originalprice"]}}</h6>
                             </div>
                             <div class="prd-bottom">
 
                                 <a href="" class="social-info">
                                     <span class="ti-bag"></span>
-                                    <p class="hover-text">add to bag</p>
+                                    <form method="POST" action="{{url_for('additem.addtocart')}}"> 
+                                        <input type="hidden" name="productid" value={{item}}>
+                                        <p class="hover-text"><button>add to bag</button></p>
+                                    </form>
                                 </a>
                                 <a href="" class="social-info">
                                     <span class="lnr lnr-heart"></span>
@@ -182,7 +185,6 @@
                     </div>
                 </div>
                 {% endif %}
-            {% endfor %}
         {% endfor %}
             </div>
         </div>
@@ -203,23 +205,25 @@
             </div>
             <div class="row">
                 <!-- single product -->
-        {% for items in products %}
-            {% for item in products[items] %}
-                {% if products[items][item]["type"] == "coming" %}
+            {% for item in products %}
+                {% if products[item]["type"] == "coming" %}
                 <div class="col-lg-3 col-md-6">
                     <div class="single-product">
-                        <img class="img-fluid" src="..{{products[items][item]["image"]}}"  alt="">
+                        <img class="img-fluid" src="..{{products[item]["image"]}}"  alt="">
                         <div class="product-details">
-                            <h6>{{products[items][item]["productname"]}}</h6>
+                            <h6>{{products[item]["productname"]}}</h6>
                             <div class="price">
-                                <h6>${{products[items][item]["price"]}}</h6>
-                                <h6 class="l-through">${{products[items][item]["originalprice"]}}</h6>
+                                <h6>${{products[item]["price"]}}</h6>
+                                <h6 class="l-through">${{products[item]["originalprice"]}}</h6>
                             </div>
                             <div class="prd-bottom">
 
                                 <a href="" class="social-info">
                                     <span class="ti-bag"></span>
-                                    <p class="hover-text">add to bag</p>
+                                    <form method="POST" action="{{url_for('additem.addtocart')}}"> 
+                                        <input type="hidden" name="productid" value={{item}}>
+                                        <button class="hover-text">add to bag</button>
+                                    </form>
                                 </a>
                                 <a href="" class="social-info">
                                     <span class="lnr lnr-heart"></span>
@@ -238,7 +242,6 @@
                     </div>
                 </div>
                     {% endif %}
-                {% endfor %}
             {% endfor %} 
         </div>
 <!-- Start exclusive deal Area -->
