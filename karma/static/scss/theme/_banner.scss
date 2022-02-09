@@ -69,7 +69,7 @@
 		text-align: center;
 		@extend .gradient-bg;
 		border-radius: 50%;
-		box-shadow: 0 10px 20px rgba(255, 108, 0, 0.2);
+		box-shadow: 0 10px 20px rgba(38,60,77,1);
 		span {
 			@include transform(rotate(45deg));
 			display: inline-block;
