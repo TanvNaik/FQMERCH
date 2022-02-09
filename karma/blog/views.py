@@ -14,11 +14,11 @@ def blogs():
 def singleblog():
     return render_template('singleblog.html')
 
-@blog.route('/')
-def index():
-    filename = os.path.join(app.static_folder, 'json/feature.json')
-    f = open(filename)
-    file = json.load(f)
+@blog.route('/') 
+def index(): 
+    filename = os.path.join(app.static_folder, 'json/feature.json') 
+    f = open(filename) 
+    file = json.load(f) 
     products = db.child("products").get().val() 
     return render_template('index.html', data=file, products=products) 
 

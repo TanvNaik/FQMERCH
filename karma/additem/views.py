@@ -17,6 +17,8 @@ def add():
         now = str(now.strftime("%S%M%H%d%m%Y"))
         item = {
             'productcategory' : form.productcategory.data,
+            'brand': form.brand.data,
+            'color': form.color.data,
             'productname' : form.productname.data,
             'price' : form.price.data,
             'originalprice' : form.originalprice.data,
@@ -30,6 +32,12 @@ def add():
         picture = url_for('static', filename='category/'+pic)
         item['image'] = picture
         id = random.randint(100000, 1000000000)
+        if db.child("brands").child(item['brand']).get().val() == None:
+            db.child("brands").child(item['brand']).set(item['brand'])
+
+        if db.child("colors").child(item['color']).get().val() == None:
+            db.child("colors").child(item['color']).set(item['color'])
+
         db.child("products").child(id).set(item)
 
     return render_template('product.html', form=form)
@@ -49,3 +57,28 @@ def deletefromcart():
     userid = session['id']
     db.child("cart").child(userid).child(productid).remove()
     return redirect(url_for('shop.cart'))
+
+
+@additem.route('/filter', methods=["POST","GET"])
+def filter():
+    filter = request.form['filter']
+    filtervalue = request.form['filtervalue']
+    brands = db.child("brands").get().val()
+    colors = db.child("colors").get().val()
+    categories = db.child("categories").get().val()
+    products = db.child("products").order_by_child(filter).equal_to(filtervalue).get().val()
+    msg = "Results for products of "+filter+" "+filtervalue
+    return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg = msg) 
+
+
+@additem.route('/filterprice', methods=["POST","GET"])
+def filterprice():
+    startprice = request.form['startprice']
+    endprice = request.form['endprice']
+    brands = db.child("brands").get().val()
+    colors = db.child("colors").get().val()
+    categories = db.child("categories").get().val()
+    products = db.child("products").order_by_child('price').start_at(startprice).end_at(endprice).get().val()
+    msg = "Results for products in range of $"+startprice+"-"+endprice
+    return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg=msg) 
+
