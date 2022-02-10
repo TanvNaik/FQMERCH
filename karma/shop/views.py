@@ -4,7 +4,7 @@ from karma import db
 shop = Blueprint('shop', __name__)
 
 
-@shop.route('/category')
+@shop.route('/category', methods=["POST","GET"])
 def category():
     if session['login']:
         products = db.child("products").get().val() 
@@ -16,11 +16,14 @@ def category():
         return redirect(url_for('blog.index')) 
 
 
-@shop.route('/cart')
+@shop.route('/cart', methods=["POST","GET"])
 def cart():
     if session['login']:
+        userid = session['id']
         data = db.child("cart").child(session['id']).get().val()
-        return render_template('cart.html', data = data)
+        data.pop("totalprice")
+        totalprice = db.child("cart").child(userid).child("totalprice").get().val()
+        return render_template('cart.html', data = data, totalprice=totalprice)
     else:
         return redirect(url_for('blog.index'))
 

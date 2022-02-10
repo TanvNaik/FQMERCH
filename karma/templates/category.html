@@ -24,16 +24,21 @@
 				<div class="sidebar-categories">
 					<div class="head">Browse Categories</div>
 					<ul class="main-categories">
-					{% if categories %}
-		    	        {% for category in categories %}
+						<div class="p-1">
+						    <a class="btn btn-outline-dark btn-sm" href="{{url_for('shop.category')}}">All</a>
+					    </div>
+						{% if categories %} 
+		    	        {% for category in categories %} 
 						<form method="POST" action="{{url_for('additem.filter')}}"> 
 							<input type="hidden" name="filter" value="productcategory"> 
 							<input type="hidden" name="filtervalue" value={{category}}> 
-							<li class="filter-list"><button><label for="apple">{{category.upper()}}<span>(29)</span></button></li>
-						</form>
-						{% endfor %}
-					{% endif %}
-					</ul>
+							<div class="p-1">
+							    <li class="filter-list"><label for="apple"><button class="btn btn-outline-dark btn-sm">{{category.upper()}}</button></label></li>
+							</div>
+						</form> 
+						{% endfor %} 
+					{% endif %} 
+					</ul> 
 				</div>
 				<div class="sidebar-filter mt-50">
 					<div class="top-filter-head">Product Filters</div>
@@ -45,7 +50,9 @@
 						<form method="POST" action="{{url_for('additem.filter')}}"> 
 							<input type="hidden" name="filter" value="brand"> 
 							<input type="hidden" name="filtervalue" value={{brand}}> 
-							<li class="filter-list"><input class="pixel-radio" type="radio" id="apple" name="brand"><label for="apple"><button>{{brand.upper()}}<span>(29)</span></button></li>
+							<div class="p-1">
+							<li class="filter-list"><label for="apple"><button class="btn btn-outline-dark btn-sm">{{brand.upper()}}</button></li>
+						    </div>
 						</form>
 						{% endfor %}
 						{% endif %}
@@ -59,7 +66,7 @@
 						<form method="POST" action="{{url_for('additem.filter')}}"> 
 							<input type="hidden" name="filter" value="color"> 
 							<input type="hidden" name="filtervalue" value={{color}}> 
-							<li class="filter-list"><label for="apple"><button>{{color.upper()}}<span>(29)</span></label></button></li>
+							<li class="filter-list"><label for="apple"><button class="btn btn-outline-dark btn-sm">{{color.upper()}}<span>(29)</span></label></button></li>
 						</form>
 						{% endfor %}
 						{% endif %}
@@ -70,16 +77,16 @@
 						<div class="price-range-area">
 							<div id="price-range"></div>
 							<div class="value-wrapper d-flex">
-								<div class="price">Price: </div>
 								<form method="POST" action="{{url_for('additem.filterprice')}}">
-									<input name="startprice" type="text" placeholder="Minimum Price in $"> 
-									<input name="endprice" type="text" placeholder="Maximum Price in $"> 
-									<button>Submit</button>
+									<div class="input-group">
+										<span class="input-group-text">Price : </span>
+									    <input name="startprice" class="form-control" type="text" placeholder="Min"> 
+									    <input name="endprice" class="form-control" type="text" placeholder="Max">  
+								    </div>
+									<div class="p-3 d-flex justify-content-center">
+									    <button class="btn btn-dark">Submit</button>
+								    </div>
 								</form>
-								<!-- <div id="lower-value"></div>
-								<div class="to">to</div>
-								<span>$</span>
-								<div id="upper-value"></div> -->
 							</div>
 						</div>
 					</div>
@@ -138,7 +145,7 @@
 											<span class="ti-bag"></span>
 											<form method="POST" action="{{url_for('additem.addtocart')}}"> 
 												<input type="hidden" name="productid" value={{item}}>
-												<p class="hover-text"><button>add to bag</button></p>
+												<button class="hover-text btn btn-outline-dark btn-sm">add to bag</button>
 											</form>
 										</a>
 										<a href="" class="social-info">

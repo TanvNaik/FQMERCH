@@ -49,13 +49,29 @@ def addtocart():
     userid = session['id']
     data = db.child("products").child(productid).get().val()
     db.child("cart").child(userid).child(productid).set(data)
+    data = db.child("cart").child(userid).get().val()
+    totalprice = db.child("cart").child(userid).child("totalprice").get().val()
+    if totalprice == None: 
+        totalprice = int(0)
+    totalprice = int(totalprice)
+    totalprice += int(data[productid]["price"])
+
+    db.child("cart").child(userid).child("totalprice").set(totalprice)
     return redirect(url_for('shop.cart'))
 
 @additem.route('/deletefromcart', methods=["POST","GET"])
 def deletefromcart():
     productid = request.form['productid']
     userid = session['id']
+    totalprice = db.child("cart").child(userid).child("totalprice").get().val()
+    data = db.child("cart").child(userid).get().val()
     db.child("cart").child(userid).child(productid).remove()
+    if totalprice == None: 
+        totalprice = int(0)
+    totalprice = int(totalprice)
+    totalprice -= int(data[productid]["price"])
+
+    db.child("cart").child(userid).child("totalprice").set(totalprice)
     return redirect(url_for('shop.cart'))
 
 

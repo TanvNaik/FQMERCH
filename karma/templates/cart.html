@@ -39,7 +39,7 @@
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="..{{data[items]['image']}}" alt="">
+                                            <img class="cart_image" src="..{{data[items]['image']}}" alt="">
                                         </div>
                                         <div class="media-body">
                                             <p>{{data[items]['productname']}}</p>
@@ -65,12 +65,11 @@
                                 <td>
                                     <form method="POST" action="{{url_for('additem.deletefromcart')}}"> 
                                         <input type="hidden" name="productid" value={{items}}>
-                                        <button class="hover-text">Delete Item</button>
+                                        <button class="gray_btn">Delete</button>
                                     </form>
                                 </td>
                             </tr>
                         {% endfor %}
-                        {% endif %}
                             <!-- End Row -->
                             <tr class="bottom_button">
                                 <td>
@@ -101,7 +100,7 @@
                                     <h5>Subtotal</h5>
                                 </td>
                                 <td>
-                                    <h5>$2160.00</h5>
+                                    <h5>${{totalprice}}</h5>
                                 </td>
                             </tr>
                             <tr class="shipping_area">
@@ -160,6 +159,9 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <h1><center>You Don't Have any Product In Your Cart</center></h1> <br> <br>
+        {% endif %}
     </section>
     <!--================End Cart Area =================-->
     {% endblock %}
