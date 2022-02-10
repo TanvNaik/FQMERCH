@@ -1,4 +1,4 @@
-from flask import redirect, render_template, url_for,request, session
+from flask import Flask, redirect, render_template, url_for
 import razorpay
 from karma import app
 
