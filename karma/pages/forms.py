@@ -22,11 +22,13 @@ class RegisterForm(FlaskForm):
 
 class ProductForm(FlaskForm):
 
-    producttype = StringField("type", validators=[dr], render_kw={"placeholder":"Product Type"})
+    producttype = StringField("type", validators=[dr], render_kw={"placeholder":"Product Type(hoodie/tshirt)"})
     productname = StringField("name", validators=[dr], render_kw={"placeholder":"Product Name"})
     price = StringField("Price", validators=[dr], render_kw={"placeholder":"Product Price"})
     originalprice = StringField("originalprice", validators=[dr], render_kw={"placeholder":"Product Original Price"})
     stock = StringField("stock", validators=[dr], render_kw={"placeholder":"Product Stock"})
+    brand = StringField("brand", validators=[dr], render_kw={"placeholder":"Product Brand"})
+    color = StringField("color", validators=[dr], render_kw={"placeholder":"Product Color"})
     image = FileField('Product Image', validators=[dr, FileAllowed(['jpg', 'png', 'jpeg'])])
     productcategory = StringField("category", validators=[dr], render_kw={"placeholder":"Product Category"})
     submit = SubmitField("Add Product")

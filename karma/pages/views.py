@@ -54,11 +54,3 @@ def logout():
     return redirect(url_for('blog.index'))
 
 
-
-
-
-
-
-# @pages.route('/elements')
-# def elements():
-#     return render_template('elements.html')
