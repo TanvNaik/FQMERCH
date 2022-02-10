@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, url_for
 import smtplib
-import os 
 import pyrebase
 
 firebaseConfiguration = {
@@ -50,9 +49,6 @@ app.register_blueprint(blog)
 app.register_blueprint(pages)
 app.register_blueprint(additem)
 
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
 
 @app.route('/contact')
 def contact():

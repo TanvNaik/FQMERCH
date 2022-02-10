@@ -47,6 +47,7 @@ def add():
 def addtocart():
     productid = request.form['productid']
     userid = session['id']
+    check = db.child("cart").child(userid).child(productid).get().val()
     data = db.child("products").child(productid).get().val()
     db.child("cart").child(userid).child(productid).set(data)
     data = db.child("cart").child(userid).get().val()
@@ -54,7 +55,8 @@ def addtocart():
     if totalprice == None: 
         totalprice = int(0)
     totalprice = int(totalprice)
-    totalprice += int(data[productid]["price"])
+    if check == None:
+        totalprice += int(data[productid]["price"])
 
     db.child("cart").child(userid).child("totalprice").set(totalprice)
     return redirect(url_for('shop.cart'))
