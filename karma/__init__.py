@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for
 import smtplib
-import os
+import os 
 import pyrebase
 
 firebaseConfiguration = {
