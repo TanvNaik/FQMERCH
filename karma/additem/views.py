@@ -47,6 +47,8 @@ def add():
 def addtocart():
     productid = request.form['productid']
     userid = session['id']
+    if request.form['movetocart']:
+        db.child("wishList").child(userid).child(productid).remove()
     check = db.child("cart").child(userid).child(productid).get().val()
     data = db.child("products").child(productid).get().val()
     db.child("cart").child(userid).child(productid).set(data)
@@ -75,6 +77,21 @@ def deletefromcart():
 
     db.child("cart").child(userid).child("totalprice").set(totalprice)
     return redirect(url_for('shop.cart'))
+
+@additem.route('/addToWishList', methods=['POST','GET'])
+def addToWishList():
+    productId = request.form['productid']
+    userId = session['id']
+    productData = db.child('products').child(productId).get().val()
+    db.child('wishList').child(userId).child(productId).set(productData)
+    return redirect(url_for('shop.wishList'))
+
+@additem.route('/deleteFromWishList', methods=['POST','GET'])
+def deleteFromWishList():
+    productid = request.form['productid']
+    userid = session['id']
+    db.child("wishList").child(userid).child(productid).remove()
+    return redirect(url_for('shop.wishList'))
 
 
 @additem.route('/filter', methods=["POST","GET"])

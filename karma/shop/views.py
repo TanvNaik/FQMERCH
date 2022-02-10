@@ -28,3 +28,11 @@ def cart():
         return redirect(url_for('blog.index'))
 
 
+
+@shop.route('/wishList', methods=["POST","GET"])
+def wishList():
+    if session['login']:
+        wldata = db.child('wishList').child(session['id']).get().val()
+        return render_template('wishList.html', data = wldata)
+    else:
+        return  redirect(url_for('pages.login'))
