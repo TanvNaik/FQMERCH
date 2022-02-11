@@ -150,7 +150,10 @@
 										</a>
 										<a class="social-info">
 											<span class="lnr lnr-heart"></span>
-											<p class="hover-text">Wishlist</p>
+											<form method="POST" action="{{url_for('additem.addToWishList')}}">
+												 <input type="hidden" name="productid" value={{item}}>
+												 <p class="hover-text"><button type="submit">add to wishlist</button></p>
+											</form>
 										</a>
 										<a class="social-info">
 											<span class="lnr lnr-sync"></span>

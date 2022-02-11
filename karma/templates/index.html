@@ -140,9 +140,7 @@
                     <div class="section-title">
                         <h1>Latest Products</h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore et
-                            dolore
-                            magna aliqua.</p>
+                            labore et dolore magna aliqua.</p>
                     </div>
                 </div>
             </div>
@@ -169,7 +167,7 @@
                                         <p class="hover-text"><button>add to bag</button></p>
                                     </form>
                                 </a>
-                                <a href="" class="social-info">
+                                <a class="social-info">
                                     <span class="lnr lnr-heart"></span>
                                     <form method="POST" action="{{url_for('additem.addToWishList')}}">
                                          <input type="hidden" name="productid" value={{item}}>
@@ -229,7 +227,7 @@
                                         <span class="ti-bag"></span><button class="hover-text">add to bag</button>
                                     </form>
                                 </a>
-                                <a href="" class="social-info">
+                                <a class="social-info">
                                     <span class="lnr lnr-heart"></span>
                                     <form method="POST" action="{{url_for('additem.addToWishList')}}">
                                          <input type="hidden" name="productid" value={{item}}>
