@@ -30,7 +30,7 @@
                                 <th scope="col">Price</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Total</th>
-                                <th scope="col">Delete Item</th>
+                                <th scope="col">Remove Item</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,7 +66,7 @@
                                 <td>
                                     <form method="POST" action="{{url_for('additem.deletefromcart')}}"> 
                                         <input type="hidden" name="productid" value={{items}}>
-                                        <button class="gray_btn">Delete</button>
+                                        <button class="gray_btn">REMOVE</button>
                                     </form>
                                 </td>
                             </tr>
@@ -92,19 +92,19 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <h5>Subtotal</h5>
+                                    <h4 style="font-weight: 600;">TOTAL AMOUNT</h4>
                                 </td>
                                 <td>
-                                    <h5>${{totalprice}}</h5>
+                                    <h4 style="font-weight: 600;">${{totalprice}}</h4>
                                 </td>
                             </tr>
                             <tr class="shipping_area">
                                 <td></td>
                                 <td></td>
-                                <td></td>
                                 <td>
                                     <h5>Shipping</h5>
                                 </td>
+                                <td></td>
                                 <td>
                                     <div class="shipping_box">
                                         <ul class="list">
@@ -136,9 +136,9 @@
                                 <td></td>
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a class="gray_btn" href="#">Continue Shopping</a>
+                                        <a class="gray_btn" href="{{url_for('blog.index')}}">Continue Shopping</a> <hr>
                                         <form action="{{url_for('charge')}}", method="POST">
-                                            <button class="primary-btn">Proceed to checkout</button>
+                                            <button class="primary-btn">Place Order</button>
                                         </form>
                                     </div>
                                 </td>
