@@ -23,7 +23,7 @@
 			<div class="col-xl-3 col-lg-4 col-md-5">
 				<div class="sidebar-categories">
 					<div class="head">Browse Categories</div>
-					<ul class="main-categories">
+					<ul class="main-categories p-4">
 						<div class="p-1">
 						    <a class="btn btn-outline-dark btn-sm" href="{{url_for('shop.category')}}">All</a>
 					    </div>
@@ -42,36 +42,6 @@
 				</div>
 				<div class="sidebar-filter mt-50">
 					<div class="top-filter-head">Product Filters</div>
-					<div class="common-filter">
-						<div class="head">Brands</div>
-						<ul>
-						{% if brands %}
-						{% for brand in brands %}
-						<form method="POST" action="{{url_for('additem.filter')}}"> 
-							<input type="hidden" name="filter" value="brand"> 
-							<input type="hidden" name="filtervalue" value={{brand}}> 
-							<div class="p-1">
-							<li class="filter-list"><label for="apple"><button class="btn btn-outline-dark btn-sm">{{brand.upper()}}</button></li>
-						    </div>
-						</form>
-						{% endfor %}
-						{% endif %}
-					    </ul>
-					</div>
-					<div class="common-filter">
-						<div class="head">Color</div>
-						<ul>
-						{% if colors %}
-						{% for color in colors %}
-						<form method="POST" action="{{url_for('additem.filter')}}"> 
-							<input type="hidden" name="filter" value="color"> 
-							<input type="hidden" name="filtervalue" value={{color}}> 
-							<li class="filter-list"><label for="apple"><button class="btn btn-outline-dark btn-sm">{{color.upper()}}<span>(29)</span></label></button></li>
-						</form>
-						{% endfor %}
-						{% endif %}
-					</ul>
-					</div>
 					<div class="common-filter">
 						<div class="head">Price</div>
 						<div class="price-range-area">
@@ -95,7 +65,7 @@
 			<div class="col-xl-9 col-lg-8 col-md-7">
 				<!-- Start Filter Bar -->
 				<div class="filter-bar d-flex flex-wrap align-items-center">
-					<div class="sorting">
+					<!-- <div class="sorting">
 						<select>
 							<option value="1">Default sorting</option>
 							<option value="1">Default sorting</option>
@@ -108,7 +78,7 @@
 							<option value="1">Show 12</option>
 							<option value="1">Show 12</option>
 						</select>
-					</div>
+					</div> -->
 					<div class="pagination">
 						<a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
 						<a href="#" class="active">1</a>

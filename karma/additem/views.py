@@ -11,109 +11,134 @@ additem = Blueprint('additem',__name__)
 
 @additem.route('/addproduct', methods=["POST","GET"])
 def add():
-    form = ProductForm()
-    if form.validate_on_submit():
-        now = datetime.now()
-        now = str(now.strftime("%S%M%H%d%m%Y"))
-        item = {
-            'productcategory' : form.productcategory.data,
-            'brand': form.brand.data,
-            'color': form.color.data,
-            'productname' : form.productname.data,
-            'price' : form.price.data,
-            'originalprice' : form.originalprice.data,
-            'stock' : form.stock.data,
-            'type':form.producttype.data,
-            'image' : form.image.data,
-            'time': now
-        }
-        if form.image.data:
-            pic = add_pic(form.image.data, form.productname.data)
-        picture = url_for('static', filename='category/'+pic)
-        item['image'] = picture
-        id = random.randint(100000, 1000000000)
-        if db.child("brands").child(item['brand']).get().val() == None:
-            db.child("brands").child(item['brand']).set(item['brand'])
+    if session['login']:
+        form = ProductForm()
+        if form.validate_on_submit():
+            now = datetime.now()
+            now = str(now.strftime("%S%M%H%d%m%Y"))
+            item = {
+                'productcategory' : form.productcategory.data,
+                    'brand': form.brand.data,
+                'color': form.color.data,
+                'productname' : form.productname.data,
+                'price' : form.price.data,
+                'originalprice' : form.originalprice.data,
+                'stock' : form.stock.data,
+                'type':form.producttype.data,
+                'image' : form.image.data,
+                'time': now
+            }
+            if form.image.data:
+                pic = add_pic(form.image.data, form.productname.data)
+            picture = url_for('static', filename='category/'+pic)
+            item['image'] = picture
+            id = random.randint(100000, 1000000000)
+            if db.child("brands").child(item['brand']).get().val() == None:
+                db.child("brands").child(item['brand']).set(item['brand'])
 
-        if db.child("colors").child(item['color']).get().val() == None:
-            db.child("colors").child(item['color']).set(item['color'])
+            if db.child("colors").child(item['color']).get().val() == None:
+                db.child("colors").child(item['color']).set(item['color'])
 
-        db.child("products").child(id).set(item)
+            db.child("products").child(id).set(item)
 
-    return render_template('product.html', form=form)
+        return render_template('product.html', form=form)
+    
+    else:
+        return redirect(url_for('blog.index'))
 
 
 @additem.route('/addtocart', methods=["POST","GET"])
 def addtocart():
-    productid = request.form['productid']
-    userid = session['id']
-    if request.form['movetocart']:
-        db.child("wishList").child(userid).child(productid).remove()
-    check = db.child("cart").child(userid).child(productid).get().val()
-    data = db.child("products").child(productid).get().val()
-    db.child("cart").child(userid).child(productid).set(data)
-    data = db.child("cart").child(userid).get().val()
-    totalprice = db.child("cart").child(userid).child("totalprice").get().val()
-    if totalprice == None: 
-        totalprice = int(0)
-    totalprice = int(totalprice)
-    if check == None:
-        totalprice += int(data[productid]["price"])
+    if session['login']:
+        productid = request.form['productid']
+        userid = session['id']
+        if request.form['movetocart']:
+            db.child("wishList").child(userid).child(productid).remove()
+        check = db.child("cart").child(userid).child(productid).get().val()
+        data = db.child("products").child(productid).get().val()
+        db.child("cart").child(userid).child(productid).set(data)
+        data = db.child("cart").child(userid).get().val()
+        totalprice = db.child("cart").child(userid).child("totalprice").get().val()
+        if totalprice == None: 
+            totalprice = int(0)
+        totalprice = int(totalprice)
+        if check == None:
+            totalprice += int(data[productid]["price"])
 
-    db.child("cart").child(userid).child("totalprice").set(totalprice)
-    return redirect(url_for('shop.cart'))
+        db.child("cart").child(userid).child("totalprice").set(totalprice)
+        return redirect(url_for('shop.cart'))
+
+    else:
+        return redirect(url_for('blog.index'))
 
 @additem.route('/deletefromcart', methods=["POST","GET"])
 def deletefromcart():
-    productid = request.form['productid']
-    userid = session['id']
-    totalprice = db.child("cart").child(userid).child("totalprice").get().val()
-    data = db.child("cart").child(userid).get().val()
-    db.child("cart").child(userid).child(productid).remove()
-    if totalprice == None: 
-        totalprice = int(0)
-    totalprice = int(totalprice)
-    totalprice -= int(data[productid]["price"])
+    if session['login']:
+        productid = request.form['productid']
+        userid = session['id']
+        totalprice = db.child("cart").child(userid).child("totalprice").get().val()
+        data = db.child("cart").child(userid).get().val()
+        db.child("cart").child(userid).child(productid).remove()
+        if totalprice == None: 
+            totalprice = int(0)
+        totalprice = int(totalprice)
+        totalprice -= int(data[productid]["price"])
 
-    db.child("cart").child(userid).child("totalprice").set(totalprice)
-    return redirect(url_for('shop.cart'))
+        db.child("cart").child(userid).child("totalprice").set(totalprice)
+        return redirect(url_for('shop.cart'))
+    
+    else:
+        return redirect(url_for('blog.index'))
 
 @additem.route('/addToWishList', methods=['POST','GET'])
 def addToWishList():
-    productId = request.form['productid']
-    userId = session['id']
-    productData = db.child('products').child(productId).get().val()
-    db.child('wishList').child(userId).child(productId).set(productData)
-    return redirect(url_for('shop.wishList'))
+    if session['login']:
+        productId = request.form['productid']
+        userId = session['id']
+        productData = db.child('products').child(productId).get().val()
+        db.child('wishList').child(userId).child(productId).set(productData)
+        return redirect(url_for('shop.wishList'))
+
+    else:
+        return redirect(url_for('blog.index'))
 
 @additem.route('/deleteFromWishList', methods=['POST','GET'])
 def deleteFromWishList():
-    productid = request.form['productid']
-    userid = session['id']
-    db.child("wishList").child(userid).child(productid).remove()
-    return redirect(url_for('shop.wishList'))
+    if session['login']:
+        productid = request.form['productid']
+        userid = session['id']
+        db.child("wishList").child(userid).child(productid).remove()
+        return redirect(url_for('shop.wishList'))
+
+    else:
+        return redirect(url_for('blog.index'))
 
 
 @additem.route('/filter', methods=["POST","GET"])
 def filter():
-    filter = request.form['filter']
-    filtervalue = request.form['filtervalue']
-    brands = db.child("brands").get().val()
-    colors = db.child("colors").get().val()
-    categories = db.child("categories").get().val()
-    products = db.child("products").order_by_child(filter).equal_to(filtervalue).get().val()
-    msg = "Results for products of "+filter+" "+filtervalue
-    return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg = msg) 
-
+    if session['login']:
+        filter = request.form['filter']
+        filtervalue = request.form['filtervalue']
+        brands = db.child("brands").get().val()
+        colors = db.child("colors").get().val()
+        categories = db.child("categories").get().val()
+        products = db.child("products").order_by_child(filter).equal_to(filtervalue).get().val()
+        msg = "Results for products of "+filter+" "+filtervalue
+        return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg = msg) 
+    else:
+        return redirect(url_for('blog.index'))
 
 @additem.route('/filterprice', methods=["POST","GET"])
 def filterprice():
-    startprice = request.form['startprice']
-    endprice = request.form['endprice']
-    brands = db.child("brands").get().val()
-    colors = db.child("colors").get().val()
-    categories = db.child("categories").get().val()
-    products = db.child("products").order_by_child('price').start_at(startprice).end_at(endprice).get().val()
-    msg = "Results for products in range of $"+startprice+"-"+endprice
-    return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg=msg) 
-
+    if session['login']:
+        startprice = request.form['startprice']
+        endprice = request.form['endprice']
+        brands = db.child("brands").get().val()
+        colors = db.child("colors").get().val()
+        categories = db.child("categories").get().val()
+        products = db.child("products").order_by_child('price').start_at(startprice).end_at(endprice).get().val()
+        msg = "Results for products in range of $"+startprice+"-"+endprice
+        return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg=msg) 
+    
+    else:
+        return redirect(url_for('blog.index'))

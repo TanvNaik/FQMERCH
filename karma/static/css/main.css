@@ -3483,7 +3483,7 @@ label {
   .price-range-area .noUi-handle::after, .price-range-area .noUi-handle::before {
     display: none; }
   .price-range-area .value-wrapper {
-    margin-top: 20px;
+    margin-top: -30px;
     color: #cccccc; }
     .price-range-area .value-wrapper .to {
       margin: 0 5px; }

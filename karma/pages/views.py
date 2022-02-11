@@ -40,7 +40,7 @@ def login():
 
     return render_template('login.html', form=form)
 
-@pages.route('/tracking')
+@pages.route('/tracking', methods=['POST','GET'])
 def tracking():
     if session['login']:
         return render_template('tracking.html')
@@ -53,4 +53,6 @@ def logout():
     session['login'] = False
     return redirect(url_for('blog.index'))
 
-
+@pages.route('/about')
+def about():
+    return render_template('about.html')

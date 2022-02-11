@@ -58,6 +58,7 @@
 									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.category')}}">Shop Category</a></li>
 									{% if session['login'] %}
 									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.cart')}}">Shopping Cart</a></li>
+									<li class="nav-item"><a class="nav-link" href="{{url_for('shop.wishList')}}">WishList</a></li>
 									{% endif %}
 								</ul>
 							</li>
@@ -75,14 +76,14 @@
 								<ul class="dropdown-menu">
 									{% if session['login'] %}
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.logout')}}">Logout</a></li>
+									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.tracking')}}">Tracking</a></li>
 									{% else %}
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.login')}}">Login</a></li>
 									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.register')}}">Register</a></li>
 									{% endif %}
-									<li class="nav-item"><a class="nav-link" href="{{url_for('pages.tracking')}}">Tracking</a></li>
 								</ul>
 							</li>
-							<li class="nav-item"><a class="nav-link" href="{{url_for('contact')}}">About</a></li>
+							<li class="nav-item"><a class="nav-link" href="{{url_for('pages.about')}}">About</a></li>
 							<li class="nav-item"><a class="nav-link" href="{{url_for('contact')}}">Contact</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
