@@ -4,14 +4,14 @@ import os
 import pyrebase
 
 firebaseConfiguration = {
-"apiKey": "AIzaSyAlzqAG9Ag670HIBzzjnIum6zpnk0o80t8",
-  "authDomain": "ecommerce-flask.firebaseapp.com",
-  "projectId": "ecommerce-flask",
-  "storageBucket": "ecommerce-flask.appspot.com",
-  "messagingSenderId": "180291136079",
-  "appId": "1:180291136079:web:61b4affc41900d387c183a",
-  "measurementId": "G-9C493M27G0",
-  "databaseURL": "https://ecommerce-flask-default-rtdb.firebaseio.com/"
+'apiKey': "AIzaSyDYc_fsQa6MgJZMTQd_Dp-qhvyc93V-XuY",
+  'authDomain': "fq-merch.firebaseapp.com",
+  'databaseURL': "https://fq-merch-default-rtdb.firebaseio.com",
+  'projectId': "fq-merch",
+  'storageBucket': "fq-merch.appspot.com",
+  'messagingSenderId': "27867821793",
+  'appId': "1:27867821793:web:a06f9ca5cd4458ffb0e9a0",
+  'measurementId': "G-SKCLJFEJN9"
 }
 firebase = pyrebase.initialize_app(firebaseConfiguration)
 auth = firebase.auth()

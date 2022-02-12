@@ -31,7 +31,8 @@
 		    	        {% for category in categories %} 
 						<form method="POST" action="{{url_for('additem.filter')}}"> 
 							<input type="hidden" name="filter" value="productcategory"> 
-							<input type="hidden" name="filtervalue" value={{category}}> 
+							<input type="hidden" name="filtervalue" value={{category}}>
+
 							<div class="p-1">
 							    <li class="filter-list"><label for="apple"><button class="btn btn-outline-dark btn-sm">{{category.upper()}}</button></label></li>
 							</div>
@@ -115,6 +116,7 @@
 											<span class="ti-bag"></span>
 											<form method="POST" action="{{url_for('additem.addtocart')}}"> 
 												<input type="hidden" name="productid" value={{item}}>
+												<input type="hidden" name="movetocart" value="">
 												<button class="hover-text btn btn-outline-dark btn-sm">add to bag</button>
 											</form>
 										</a>
@@ -125,14 +127,7 @@
 												 <p class="hover-text"><button type="submit">add to wishlist</button></p>
 											</form>
 										</a>
-										<a class="social-info">
-											<span class="lnr lnr-sync"></span>
-											<p class="hover-text">compare</p>
-										</a>
-										<a class="social-info">
-											<span class="lnr lnr-move"></span>
-											<p class="hover-text">view more</p>
-										</a>
+
 									</div>
 								</div>
 							</div>
