@@ -62,74 +62,6 @@
 </section>
 <!-- end features Area -->
 
-<!-- Start category Area -->
-<section class="category-area">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-12">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8">
-                        <div class="single-deal">
-                            <div class="overlay"></div>
-                            <img class="img-fluid w-100" src="../static/img/category/c1.jpg" alt="">
-                            <a href="../static/img/category/c1.jpg" class="img-pop-up" target="_blank">
-                                <div class="deal-details">
-                                    <h6 class="deal-title">Sneaker for Sports</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4">
-                        <div class="single-deal">
-                            <div class="overlay"></div>
-                            <img class="img-fluid w-100" src="../static/img/category/c2.jpg" alt="">
-                            <a href="../static/img/category/c2.jpg" class="img-pop-up" target="_blank">
-                                <div class="deal-details">
-                                    <h6 class="deal-title">Sneaker for Sports</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4">
-                        <div class="single-deal">
-                            <div class="overlay"></div> 
-                            <img class="img-fluid w-100" src="../static/img/category/c3.jpg" alt="">
-                            <a href="../static/img/category/c3.jpg" class="img-pop-up" target="_blank">
-                                <div class="deal-details">
-                                    <h6 class="deal-title">Product for Couple</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-8">
-                        <div class="single-deal">
-                            <div class="overlay"></div>
-                            <img class="img-fluid w-100" src="../static/img/category/c4.jpg" alt="">
-                            <a href="../static/img/category/c4.jpg" class="img-pop-up" target="_blank">
-                                <div class="deal-details">
-                                    <h6 class="deal-title">Sneaker for Sports</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="single-deal">
-                    <div class="overlay"></div>
-                    <img class="img-fluid w-100" src="../static/img/category/c5.jpg" alt="">
-                    <a href="../static/img/category/c5.jpg" class="img-pop-up" target="_blank">
-                        <div class="deal-details">
-                            <h6 class="deal-title">Sneaker for Sports</h6>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End category Area -->
-
 <!-- start product Area -->
 <section class="owl-carousel active-product-area section_gap">
     <!-- single product slide -->
@@ -162,6 +94,7 @@
                                     <span class="ti-bag"></span>
                                     <form method="POST" action="{{url_for('additem.addtocart')}}">
                                          <input type="hidden" name="movetocart" value="">
+                                        <input type="hidden" name="movetocart" value="">
                                         <input type="hidden" name="productid" value={{item}}>
                                         <p class="hover-text"><button>add to bag</button></p>
                                     </form>
@@ -172,14 +105,6 @@
                                          <input type="hidden" name="productid" value={{item}}>
                                          <p class="hover-text"><button type="submit">add to wishlist</button></p>
                                     </form>
-                                </a>
-                                <a class="social-info">
-                                    <span class="lnr lnr-sync"></span>
-                                    <p class="hover-text">compare</p>
-                                </a>
-                                <a class="social-info">
-                                    <span class="lnr lnr-move"></span>
-                                    <p class="hover-text">view more</p>
                                 </a>
                             </div>
                         </div>
@@ -233,14 +158,7 @@
                                          <p class="hover-text"><button type="submit">add to wishlist</button></p>
                                     </form>
                                 </a>
-                                <a class="social-info">
-                                    <span class="lnr lnr-sync"></span>
-                                    <p class="hover-text">compare</p>
-                                </a>
-                                <a class="social-info">
-                                    <span class="lnr lnr-move"></span>
-                                    <p class="hover-text">view more</p>
-                                </a>
+
                             </div>
                         </div>
                     </div>
@@ -299,22 +217,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- single exclusive carousel -->
-                    <div class="single-exclusive-slider">
-                        <img class="img-fluid" src="../static/img/product/e-p1.png" alt="">
-                        <div class="product-details">
-                            <div class="price">
-                                <h6>$150.00</h6>
-                                <h6 class="l-through">$210.00</h6>
-                            </div>
-                            <h4>addidas New Hammer sole
-                                for Sports person</h4>
-                            <div class="add-bag d-flex align-items-center justify-content-center">
-                                <a class="add-btn"><span class="ti-bag"></span></a>
-                                <span class="add-text text-uppercase">Add to Bag</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -322,26 +224,5 @@
 </section>
 <!-- End exclusive deal Area -->
 
-<!-- Start brand Area -->
-<section class="brand-area section_gap">
-    <div class="container">
-        <div class="row">
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="../static/img/brand/1.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="../static/img/brand/2.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="../static/img/brand/3.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="../static/img/brand/4.png" alt="">
-            </a>
-            <a class="col single-img" href="#">
-                <img class="img-fluid d-block mx-auto" src="../static/img/brand/5.png" alt="">
-            </a>
-        </div>
-    </div>
-</section>
+
 {% endblock %}
