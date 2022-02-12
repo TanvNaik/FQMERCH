@@ -18,7 +18,7 @@ def add():
             now = str(now.strftime("%S%M%H%d%m%Y"))
             item = {
                 'productcategory' : form.productcategory.data,
-                 'brand': form.brand.data,
+                'brand': form.brand.data,
                 'color': form.color.data,
                 'productname' : form.productname.data,
                 'price' : form.price.data,
@@ -47,6 +47,7 @@ def add():
         return redirect(url_for('blog.index'))
 
 
+
 @additem.route('/addtocart', methods=["POST","GET"])
 def addtocart():
     if session['login']:
@@ -71,6 +72,8 @@ def addtocart():
 
     else:
         return redirect(url_for('blog.index'))
+
+
 
 @additem.route('/incdecqty', methods=['POST','GET'])
 def incdecqty():
@@ -113,6 +116,8 @@ def deletefromcart():
     else:
         return redirect(url_for('blog.index'))
 
+
+
 @additem.route('/addToWishList', methods=['POST','GET'])
 def addToWishList():
     if session['login']:
@@ -125,6 +130,8 @@ def addToWishList():
     else:
         return redirect(url_for('blog.index'))
 
+
+
 @additem.route('/deleteFromWishList', methods=['POST','GET'])
 def deleteFromWishList():
     if session['login']:
@@ -135,6 +142,7 @@ def deleteFromWishList():
 
     else:
         return redirect(url_for('blog.index'))
+
 
 
 @additem.route('/filter', methods=["POST","GET"])
@@ -150,6 +158,8 @@ def filter():
         return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg = msg) 
     else:
         return redirect(url_for('blog.index'))
+
+
 
 @additem.route('/filterprice', methods=["POST","GET"])
 def filterprice():
