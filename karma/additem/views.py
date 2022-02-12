@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, url_for, session, jsonify, request, redirect
 from karma import db
 from datetime import datetime
-import random
+import random,sys
 from karma.pages.forms import ProductForm
 from karma.pages.picture_handler import add_pic
 
@@ -18,7 +18,7 @@ def add():
             now = str(now.strftime("%S%M%H%d%m%Y"))
             item = {
                 'productcategory' : form.productcategory.data,
-                    'brand': form.brand.data,
+                 'brand': form.brand.data,
                 'color': form.color.data,
                 'productname' : form.productname.data,
                 'price' : form.price.data,
@@ -56,6 +56,7 @@ def addtocart():
             db.child("wishList").child(userid).child(productid).remove()
         # check = db.child("cart").child(userid).child(productid).get().val()
         data = db.child("products").child(productid).get().val()
+        data['count'] = 1
         db.child("cart").child(userid).child(productid).set(data)
         data = db.child("cart").child(userid).get().val()
         totalprice = db.child("cart").child(userid).child("totalprice").get().val()
@@ -70,6 +71,33 @@ def addtocart():
 
     else:
         return redirect(url_for('blog.index'))
+
+@additem.route('/increaseQuantity', methods=['POST','GET'])
+def increaseQuantity():
+    print('inside increase quantity', file=sys.stderr)
+    productid = request.form['productid']
+    userId = session['id']
+    cart = db.child('cart').child(userId).get().val()
+    cart[productid]['count'] += 1
+    cart['totalprice'] += int(cart[productid]['price'])
+    db.child('cart').child(userId).set(cart)
+    return redirect(url_for('shop.cart'))
+
+@additem.route('/decreaseQuantity', methods=['POST','GET'])
+def decreaseQuantity():
+    productid = request.form['productid']
+    userId = session['id']
+    cart = db.child('cart').child(userId).get().val()
+    cart['totalprice'] -= int(cart[productid]['price'])
+    print(f'{cart}', file=sys.stderr)
+    if(cart[productid]['count'] == 1):
+        cart.pop(productid)
+    else:
+        cart[productid]['count'] -= 1
+
+    db.child('cart').child(userId).set(cart)
+    return redirect(url_for('shop.cart'))
+
 
 @additem.route('/deletefromcart', methods=["POST","GET"])
 def deletefromcart():

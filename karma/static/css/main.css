@@ -1273,7 +1273,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 52px;
     text-align: center;
     border-radius: 50%;
-    box-shadow: 0 10px 20px rgba(38,60,77,1); }
+    box-shadow: 0 2px 13px rgb(38 60 77); }
     .add-bag .add-btn span {
       -webkit-transform: rotate(45deg);
       -moz-transform: rotate(45deg);
