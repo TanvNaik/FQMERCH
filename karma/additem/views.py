@@ -54,7 +54,7 @@ def addtocart():
         userid = session['id']
         if request.form['movetocart']:
             db.child("wishList").child(userid).child(productid).remove()
-        check = db.child("cart").child(userid).child(productid).get().val()
+        # check = db.child("cart").child(userid).child(productid).get().val()
         data = db.child("products").child(productid).get().val()
         db.child("cart").child(userid).child(productid).set(data)
         data = db.child("cart").child(userid).get().val()
