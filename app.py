@@ -4,9 +4,9 @@ import razorpay
 from karma import app
 
 
-@app.route('/charge', methods=["GET","POST"])
-def charge():
-    return redirect(url_for('pay'))
+# @app.route('/charge', methods=["GET","POST"])
+# def charge():
+#     return redirect(url_for('pay'))
 
 @app.route('/pay',methods=["GET","POST"])
 def pay():

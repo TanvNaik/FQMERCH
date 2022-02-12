@@ -54,19 +54,21 @@
                                     <div class="product_count">
                                         <input type="text" name="qty" id={{data[items]['time']}} maxlength="12" value="{{data[items]['count']}}" title="Quantity:"
                                             class="input-text qty" disabled>
-                                        <form action="{{url_for('additem.increaseQuantity')}}"method="post">
+                                        <form action="{{url_for('additem.incdecqty')}}"method="post">
                                             <input type="hidden" name="productid" value={{items}}>
+                                            <input type="hidden" name="type" value="increment">
                                             <button  type="submit" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
                                         </form>
-                                        <form action="{{url_for('additem.decreaseQuantity')}}" method="post">
+                                        <form action="{{url_for('additem.incdecqty')}}" method="post">
                                             <input type="hidden" name="productid" value={{items}}>
+                                            <input type="hidden" name="type" value="decrement">
                                             <button  type="submit" onclick="var result = document.getElementById(data[items]['time']); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                                             class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
                                         </form>
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>${{data[items]['price']}}</h5>
+                                    <h5>${{data[items]['count']*data[items]['price']}}</h5>
                                 </td>
                                 <td>
                                     <form method="POST" action="{{url_for('additem.deletefromcart')}}"> 
@@ -142,7 +144,7 @@
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
                                         <a class="gray_btn" href="{{url_for('blog.index')}}">Continue Shopping</a> <hr>
-                                        <form action="{{url_for('charge')}}", method="POST">
+                                        <form action="{{url_for('pay')}}", method="POST">
                                             <button class="primary-btn">Place Order</button>
                                         </form>
                                     </div>

@@ -72,29 +72,24 @@ def addtocart():
     else:
         return redirect(url_for('blog.index'))
 
-@additem.route('/increaseQuantity', methods=['POST','GET'])
-def increaseQuantity():
-    print('inside increase quantity', file=sys.stderr)
+@additem.route('/incdecqty', methods=['POST','GET'])
+def incdecqty():
     productid = request.form['productid']
+    type = request.form['type']
     userId = session['id']
     cart = db.child('cart').child(userId).get().val()
-    cart[productid]['count'] += 1
-    cart['totalprice'] += int(cart[productid]['price'])
-    db.child('cart').child(userId).set(cart)
-    return redirect(url_for('shop.cart'))
-
-@additem.route('/decreaseQuantity', methods=['POST','GET'])
-def decreaseQuantity():
-    productid = request.form['productid']
-    userId = session['id']
-    cart = db.child('cart').child(userId).get().val()
-    cart['totalprice'] -= int(cart[productid]['price'])
-    print(f'{cart}', file=sys.stderr)
-    if(cart[productid]['count'] == 1):
-        cart.pop(productid)
+    if type == "increment":
+        cart[productid]['count'] += 1
+        if cart[productid]['count'] > cart[productid]['stock']:
+            return jsonify({"error":"Product Get Out Of Stock"})
+        cart['totalprice'] += int(cart[productid]['price'])
     else:
-        cart[productid]['count'] -= 1
-
+        cart['totalprice'] -= int(cart[productid]['price'])
+        if(cart[productid]['count'] == 1):
+            cart.pop(productid)
+        else:
+            cart[productid]['count'] -= 1
+    
     db.child('cart').child(userId).set(cart)
     return redirect(url_for('shop.cart'))
 
@@ -159,13 +154,13 @@ def filter():
 @additem.route('/filterprice', methods=["POST","GET"])
 def filterprice():
     if session['login']:
-        startprice = request.form['startprice']
-        endprice = request.form['endprice']
+        startprice = int(request.form['startprice'])
+        endprice = int(request.form['endprice'])
         brands = db.child("brands").get().val()
         colors = db.child("colors").get().val()
         categories = db.child("categories").get().val()
         products = db.child("products").order_by_child('price').start_at(startprice).end_at(endprice).get().val()
-        msg = "Results for products in range of $"+startprice+"-"+endprice
+        msg = "Results for products in range of $"+str(startprice)+"-"+str(endprice)
         return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg=msg) 
     
     else:
