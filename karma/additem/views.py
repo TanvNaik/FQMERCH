@@ -154,13 +154,13 @@ def filter():
 @additem.route('/filterprice', methods=["POST","GET"])
 def filterprice():
     if session['login']:
-        startprice = request.form['startprice']
-        endprice = request.form['endprice']
+        startprice = int(request.form['startprice'])
+        endprice = int(request.form['endprice'])
         brands = db.child("brands").get().val()
         colors = db.child("colors").get().val()
         categories = db.child("categories").get().val()
         products = db.child("products").order_by_child('price').start_at(startprice).end_at(endprice).get().val()
-        msg = "Results for products in range of $"+startprice+"-"+endprice
+        msg = "Results for products in range of $"+str(startprice)+"-"+str(endprice)
         return render_template('category.html', products=products, brands = brands, colors = colors, categories = categories, msg=msg) 
     
     else:
