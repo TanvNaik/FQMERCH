@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, session
 import json
 import os
 from karma import app, db
@@ -15,13 +15,14 @@ def singleblog():
     return render_template('singleblog.html')
 
 @blog.route('/') 
-def index(): 
+def index():
+    session['login'] = False
     filename = os.path.join(app.static_folder, 'json/feature.json') 
     f = open(filename) 
     file = json.load(f) 
     products = db.child("products").get().val()
-
-    #update return statement after adding products in DB
-    return render_template('index.html', data=file)
-
+    if products:
+        return render_template('index.html', data=file, products=products)
+    else:
+        return render_template('index.html', data=file)
     
