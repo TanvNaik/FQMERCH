@@ -20,8 +20,6 @@ def index():
     f = open(filename) 
     file = json.load(f) 
     products = db.child("products").get().val()
-
-    #update return statement after adding products in DB
-    return render_template('index.html', data=file)
+    return render_template('index.html', data=file, products=products)
 
     

@@ -54,7 +54,7 @@ def addtocart():
         userid = session['id']
         if request.form['movetocart']:
             db.child("wishList").child(userid).child(productid).remove()
-        # check = db.child("cart").child(userid).child(productid).get().val()
+        check = db.child("cart").child(userid).child(productid).get().val()
         data = db.child("products").child(productid).get().val()
         data['count'] = 1
         db.child("cart").child(userid).child(productid).set(data)
@@ -72,29 +72,24 @@ def addtocart():
     else:
         return redirect(url_for('blog.index'))
 
-@additem.route('/increaseQuantity', methods=['POST','GET'])
-def increaseQuantity():
-    print('inside increase quantity', file=sys.stderr)
+@additem.route('/incdecqty', methods=['POST','GET'])
+def incdecqty():
     productid = request.form['productid']
+    type = request.form['type']
     userId = session['id']
     cart = db.child('cart').child(userId).get().val()
-    cart[productid]['count'] += 1
-    cart['totalprice'] += int(cart[productid]['price'])
-    db.child('cart').child(userId).set(cart)
-    return redirect(url_for('shop.cart'))
-
-@additem.route('/decreaseQuantity', methods=['POST','GET'])
-def decreaseQuantity():
-    productid = request.form['productid']
-    userId = session['id']
-    cart = db.child('cart').child(userId).get().val()
-    cart['totalprice'] -= int(cart[productid]['price'])
-    print(f'{cart}', file=sys.stderr)
-    if(cart[productid]['count'] == 1):
-        cart.pop(productid)
+    if type == "increment":
+        cart[productid]['count'] += 1
+        if cart[productid]['count'] > cart[productid]['stock']:
+            return jsonify({"error":"Product Get Out Of Stock"})
+        cart['totalprice'] += int(cart[productid]['price'])
     else:
-        cart[productid]['count'] -= 1
-
+        cart['totalprice'] -= int(cart[productid]['price'])
+        if(cart[productid]['count'] == 1):
+            cart.pop(productid)
+        else:
+            cart[productid]['count'] -= 1
+    
     db.child('cart').child(userId).set(cart)
     return redirect(url_for('shop.cart'))
 
