@@ -1,12 +1,6 @@
 from flask import Flask, redirect, render_template, url_for, session
-
 import razorpay
 from karma import app
-
-
-# @app.route('/charge', methods=["GET","POST"])
-# def charge():
-#     return redirect(url_for('pay'))
 
 @app.route('/pay',methods=["GET","POST"])
 def pay():

@@ -1,5 +1,6 @@
-from flask import render_template, Blueprint, url_for, session, jsonify, request, redirect
+from flask import render_template, Blueprint, url_for, json, session, jsonify, request, redirect
 from karma import db
+import razorpay
 from datetime import datetime
 import random,sys
 from karma.pages.forms import ProductForm
@@ -88,7 +89,7 @@ def incdecqty():
             cart[productid]['count'] -= 1
     
     db.child('cart').child(userId).set(cart)
-    return redirect(url_for('shop.cart'))
+    return redirect(request.referrer)
 
 
 @additem.route('/deletefromcart', methods=["POST","GET"])
@@ -163,6 +164,13 @@ def filterprice():
 
 @additem.route('/orderSummary', methods=['POST','GET'])
 def orderSummary():
-    orderDetails = request.form['products']
-    print(f'{orderDetails}', file=sys.stderr)
-    return render_template('pay.html', orderDetails = orderDetails)
+    if session['login']:
+        amount = int(2)*100
+        client = razorpay.Client(auth=("rzp_test_aFHgpPQ2Qr3esy", "wJPj0PREZEPGzNTS25e4p4Ac"))
+        payment = client.order.create({'amount': int(amount), 'currency':'INR', 'payment_capture':'1'})
+        print(payment)
+        totalprice = request.form['totalprice']
+        products = session['data']
+        return render_template('pay.html', data = products, totalprice=totalprice, payment=payment, amount=amount)
+    else:
+        return redirect(url_for('blog.index'))

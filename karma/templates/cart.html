@@ -35,11 +35,6 @@
                         </thead>
                         <tbody>
                             <!-- Row Start -->
-                            <form id="order" action="{{url_for('additem.orderSummary')}}" method="POST" > </form>
-                            <form id="increment" action="{{url_for('additem.incdecqty')}}"method="post"></form>
-                            <form id="decrement" action="{{url_for('additem.incdecqty')}}" method="post"></form>
-
-                                <input type="hidden"  form="order" name="products" value="{{wholeData}}">
 
                         {% for items in data %}
                             <tr>
@@ -58,18 +53,18 @@
                                 </td>
                                 <td>
                                     <div class="product_count">
-                                        <input type="text" name="qty" id={{data[items]['time']}} maxlength="12" value="{{data[items]['count']}}" title="Quantity:"
-                                            class="input-text qty" form="decrement" disabled>
-
-                                            <input type="hidden" form="increment" name="productid" value={{items}}>
-                                            <input type="hidden" form="increment" name="type" value="increment">
-                                            <button  type="submit" class="increase items-count" form="increment"><i class="lnr lnr-chevron-up"></i></button>
-
-
-                                            <input type="hidden" form="decrement" name="productid" value={{items}}>
-                                            <input type="hidden" form="decrement" name="type" value="decrement">
-                                            <button  type="submit" class="reduced items-count" form="decrement"><i class="lnr lnr-chevron-down"></i></button>
-
+                                        <input type="text" name="qty" maxlength="12" value="{{data[items]['count']}}" title="Quantity:"
+                                            class="input-text qty" disabled>
+                                            <form action="{{url_for('additem.incdecqty')}}" method="POST">
+                                                <input type="hidden" name="productid" value={{items}}>
+                                                <input type="hidden" name="type" value="increment">
+                                                <button class="increase items-count"><i class="lnr lnr-chevron-up"></i></button>
+                                            </form>
+                                            <form action="{{url_for('additem.incdecqty')}}" method="POST">
+                                                <input type="hidden" name="productid" value={{items}}>
+                                                <input type="hidden" name="type" value="decrement">
+                                                <button class="reduced items-count"><i class="lnr lnr-chevron-down"></i></button>
+                                            </form>
                                     </div>
                                 </td>
                                 <td>
@@ -149,8 +144,11 @@
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
                                         <a class="gray_btn" href="{{url_for('blog.index')}}">Continue Shopping</a> <hr>
-                                            <button type="submit"  form="order" class="primary-btn">Place Order</button>
-
+                                        <form action="{{url_for('additem.orderSummary')}}" method="POST" >
+                                            <input type="hidden" name="totalprice" value={{totalprice}}>
+                                            <button type="submit"  class="primary-btn">Place Order</button>
+                                        </form>
+                                
                                     </div>
                                 </td>
                             </tr>
