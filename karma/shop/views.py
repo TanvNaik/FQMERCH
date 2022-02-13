@@ -20,6 +20,7 @@ def cart():
             data.pop("totalprice")
         totalprice = db.child("cart").child(userid).child("totalprice").get().val()
         session['data'] = data
+        session['totalprice'] = totalprice
         return render_template('cart.html', data = data, totalprice=totalprice)
     else:
         return redirect(url_for('blog.index'))

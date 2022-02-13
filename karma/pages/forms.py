@@ -1,10 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import  DataRequired, EqualTo
-from wtforms import StringField, SubmitField, PasswordField, IntegerField, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, IntegerField, TextAreaField, SelectField
 from flask_wtf.file import FileField, FileAllowed
 
 
 dr = DataRequired()
+
+choice = [('0', 'Select State'), ('1', 'Uttar Pradesh'), ('2', 'Rajasthan'), ('3', 'Delhi'), ('4', 'Haryana'), ]
 
 class LoginForm(FlaskForm):
 
@@ -32,3 +34,16 @@ class ProductForm(FlaskForm):
     image = FileField('Product Image', validators=[dr, FileAllowed(['jpg', 'png', 'jpeg'])])
     productcategory = StringField("category", validators=[dr], render_kw={"placeholder":"Product Category"})
     submit = SubmitField("Add Product")
+
+
+class AddressForm(FlaskForm):
+
+    name = StringField("Name", validators=[dr], render_kw={"placeholder": "Name"})
+    mobile = StringField("Mobile", validators=[dr], render_kw={"placeholder": "Mobile Number"})
+    pincode = IntegerField("Pincode",validators=[dr], render_kw={"placeholder": "Pin Code"})
+    address = TextAreaField("Mobile", validators=[dr], render_kw={"placeholder": "Address"})
+    city = StringField("City", validators=[dr], render_kw={"placeholder": "City/District/Town"})
+    landmark = StringField("Landmark", render_kw={"placeholder": "Landmark(optional)"})
+    alternatemobile = StringField("Landmark", render_kw={"placeholder": "Alternate Mobile(optional)"})
+    state = SelectField("state", validators=[dr], render_kw={"placeholder": "State"}, choices=choice)
+    submit = SubmitField("ADD AND DELIVER HERE")

@@ -22,7 +22,7 @@
     </script>
 <div class="cart_area">
     <div class="container">
-        <a class="card-header btn" data-toggle="collapse" href="#multiCollapseExample1">ORDER SUMMARY</a>
+        <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1">ORDER SUMMARY</a>
         <div class="collapse multi-collapse" id="multiCollapseExample1">
             <div class="table-responsive">
                 <table class="table">
@@ -72,7 +72,7 @@
                                 <h4 style="font-weight: 600;">TOTAL AMOUNT</h4>
                             </td>
                             <td>
-                                <h4 style="font-weight: 600;">${{totalprice}}</h4>
+                                <h4 style="font-weight: 600;">${{session['username']}}</h4>
                             </td>
                         </tr>
                     </tbody>
@@ -82,21 +82,57 @@
     </div>
 </div>
 <div class="container">
-    <a class="card-header btn" data-toggle="collapse" data-target="#multiCollapseExample2">
-        DELIVERY ADDRESS
-    </a>
+    <div style="color: white;"> 
+       <a class="btn btn-dark" data-toggle="collapse" data-target="#multiCollapseExample2">
+            DELIVERY ADDRESS
+            <div>{{session['address']}}</div> 
+        </a>
     <div class="collapse multi-collapse" id="multiCollapseExample2">
         <div class="card card-body">
-            This is second element
+            <div class="col-lg-6">
+                <div class="login_form_inner pt-4">
+                    <h3>Address</h3>
+                    <form class="row login_form" action="{{url_for('additem.address')}}" method="POST" novalidate="novalidate">
+                        {{ form.hidden_tag() }}
+                        <div class="col-md-12 form-group">
+                            {{ form.name(class="form-control") }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.mobile(class="form-control") }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.pincode(class="form-control") }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.address(class="form-control") }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.city(class="form-control") }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.landmark(class="form-control") }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.alternatemobile(class="form-control") }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.state(class="form-control") }}                            </div>
+                        <div class="col-md-12 form-group">
+                            {{ form.submit(class="primary-btn") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </div>
 
 
 <!--================ end checkout Area =================-->
-<div class="container">
-    <div class="btn" style="background-color: aquamarine;">
-        <a class="card-header" data-toggle="collapse" data-target="#multiCollapseExample3">
+<div class="container p-3">
+    <div class="btn btn-dark">
+        <a data-toggle="collapse" data-target="#multiCollapseExample3">
             PAYMENT
         </a>
     </div>

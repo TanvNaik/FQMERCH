@@ -16,7 +16,6 @@ def singleblog():
 
 @blog.route('/') 
 def index():
-
     filename = os.path.join(app.static_folder, 'json/feature.json') 
     f = open(filename) 
     file = json.load(f) 

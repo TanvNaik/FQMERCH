@@ -1,9 +1,10 @@
 from flask import render_template, Blueprint, url_for, json, session, jsonify, request, redirect
 from karma import db
+from karma.pages.forms import AddressForm
 import razorpay
 from datetime import datetime
 import random,sys
-from karma.pages.forms import ProductForm
+from karma.pages.forms import ProductForm, choice
 from karma.pages.picture_handler import add_pic
 
 
@@ -165,12 +166,35 @@ def filterprice():
 @additem.route('/orderSummary', methods=['POST','GET'])
 def orderSummary():
     if session['login']:
+        form = AddressForm()
         amount = int(2)*100
         client = razorpay.Client(auth=("rzp_test_aFHgpPQ2Qr3esy", "wJPj0PREZEPGzNTS25e4p4Ac"))
         payment = client.order.create({'amount': int(amount), 'currency':'INR', 'payment_capture':'1'})
         print(payment)
-        totalprice = request.form['totalprice']
         products = session['data']
-        return render_template('pay.html', data = products, totalprice=totalprice, payment=payment, amount=amount)
+        return render_template('pay.html', data=products, payment=payment, amount=amount, form=form)
     else:
         return redirect(url_for('blog.index'))
+
+
+@additem.route('/address', methods=['POST','GET'])
+def address():
+    if session['login']:
+        form = AddressForm()
+        if form.validate_on_submit():
+            userid = session['id']
+            address = {
+                'name': form.name.data,
+                'mobile': form.mobile.data,
+                'pincode': form.pincode.data,
+                'address': form.address.data,
+                'city': form.city.data,
+                'landmark': form.landmark.data,
+                'alternatemobile': form.alternatemobile.data,
+                'state': form.state.data
+            }
+            address['state'] = choice[int(address['state'])][int(address['state'])]
+            print(address['state'])
+            db.child("users").child(userid).child("address").set(address)
+            session['address'] = address['name']+","+address['landmark']+","+address['address']+","+address['state']+","+str(address['pincode'])
+            return redirect(url_for('additem.orderSummary'))
