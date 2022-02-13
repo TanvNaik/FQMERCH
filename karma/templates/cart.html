@@ -34,7 +34,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Row Start --> 
+                            <!-- Row Start -->
+                            <form id="order" action="{{url_for('additem.orderSummary')}}" method="POST" > </form>
+                            <form id="increment" action="{{url_for('additem.incdecqty')}}"method="post"></form>
+                            <form id="decrement" action="{{url_for('additem.incdecqty')}}" method="post"></form>
+
+                                <input type="hidden"  form="order" name="products" value="{{wholeData}}">
+
                         {% for items in data %}
                             <tr>
                                 <td>
@@ -53,18 +59,17 @@
                                 <td>
                                     <div class="product_count">
                                         <input type="text" name="qty" id={{data[items]['time']}} maxlength="12" value="{{data[items]['count']}}" title="Quantity:"
-                                            class="input-text qty" disabled>
-                                        <form action="{{url_for('additem.incdecqty')}}"method="post">
-                                            <input type="hidden" name="productid" value={{items}}>
-                                            <input type="hidden" name="type" value="increment">
-                                            <button  type="submit" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                        </form>
-                                        <form action="{{url_for('additem.incdecqty')}}" method="post">
-                                            <input type="hidden" name="productid" value={{items}}>
-                                            <input type="hidden" name="type" value="decrement">
-                                            <button  type="submit" onclick="var result = document.getElementById(data[items]['time']); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                        </form>
+                                            class="input-text qty" form="decrement" disabled>
+
+                                            <input type="hidden" form="increment" name="productid" value={{items}}>
+                                            <input type="hidden" form="increment" name="type" value="increment">
+                                            <button  type="submit" class="increase items-count" form="increment"><i class="lnr lnr-chevron-up"></i></button>
+
+
+                                            <input type="hidden" form="decrement" name="productid" value={{items}}>
+                                            <input type="hidden" form="decrement" name="type" value="decrement">
+                                            <button  type="submit" class="reduced items-count" form="decrement"><i class="lnr lnr-chevron-down"></i></button>
+
                                     </div>
                                 </td>
                                 <td>
@@ -121,7 +126,7 @@
                                             <li class="active"><a href="#">Local Delivery: $2.00</a></li>
                                         </ul>
                                         <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
-                                        <select class="shipping_select">
+                                        <select name='location' class="shipping_select">
                                             <option value="1">Bangladesh</option>
                                             <option value="2">India</option>
                                             <option value="4">Pakistan</option>
@@ -144,9 +149,8 @@
                                 <td>
                                     <div class="checkout_btn_inner d-flex align-items-center">
                                         <a class="gray_btn" href="{{url_for('blog.index')}}">Continue Shopping</a> <hr>
-                                        <form action="{{url_for('pay')}}", method="POST">
-                                            <button class="primary-btn">Place Order</button>
-                                        </form>
+                                            <button type="submit"  form="order" class="primary-btn">Place Order</button>
+
                                     </div>
                                 </td>
                             </tr>

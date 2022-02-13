@@ -1,17 +1,32 @@
 from flask import render_template, redirect, url_for, session, jsonify, Blueprint
 from karma.pages.forms import RegisterForm, LoginForm
 from karma import db, auth
+import bcrypt
+
 
 pages = Blueprint('pages', __name__)
+
+
+
+# hashing password to store in DB
+def create_bcrypt_hash(password):
+    password_bytes = password.encode()
+    salt = bcrypt.gensalt(14)
+    password_hash_bytes = bcrypt.hashpw(password_bytes, salt)
+    password_hash_str = password_hash_bytes.decode()
+
+    return password_hash_str
+
 
 @pages.route('/register', methods=['POST','GET'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        encrypted_password = create_bcrypt_hash(form.password.data)
         user = {
             'username' : form.username.data,
             'email' : form.email.data,
-            'password' : form.password.data,
+            'password' : encrypted_password,
             'confirmpassword' : form.confirmpassword.data
         }
 
@@ -25,7 +40,6 @@ def register():
 
 @pages.route('/login', methods=['POST','GET'])
 def login():
-
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
