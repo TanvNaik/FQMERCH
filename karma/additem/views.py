@@ -167,22 +167,18 @@ def filterprice():
 def orderSummary():
     if session['login']:
         form = AddressForm()
-        # amount = int(2)*100
-        # client = razorpay.Client(auth=("rzp_test_aFHgpPQ2Qr3esy", "wJPj0PREZEPGzNTS25e4p4Ac"))
-        # payment = client.order.create({'amount': int(amount), 'currency':'INR', 'payment_capture':'1'})
-        # print(payment)
+        amount = int(2)*100
+        client = razorpay.Client(auth=("rzp_test_aFHgpPQ2Qr3esy", "wJPj0PREZEPGzNTS25e4p4Ac"))
+        payment = client.order.create({'amount': int(amount), 'currency':'INR', 'payment_capture':'1'})
+        print(payment)
         products = session['data']
-        return render_template('pay.html', data=products,  form=form)
+        
+        # if user['address']:
+        #     address = user['address']
+        return render_template('pay.html', data=products, payment=payment, amount=amount, form=form)
     else:
         return redirect(url_for('blog.index'))
 
-
-@additem.route('/checkout', methods=['POST', 'GET'])
-def checkout():
-    if session['login']:
-        return render_template('checkout.html')
-    else:
-        return render_template(url_for('blog.index'))
 
 @additem.route('/address', methods=['POST','GET'])
 def address():
@@ -200,19 +196,6 @@ def address():
                 'alternatemobile': form.alternatemobile.data,
                 'state': form.state.data
             }
-            # address['state'] = choice[int(address['state'])][int(address['state'])]
-            print(address['state'])
             db.child("users").child(userid).child("address").set(address)
             session['address'] = address['name']+","+address['landmark']+","+address['address']+","+address['state']+","+str(address['pincode'])
-
-            global payment
-            form = AddressForm('/blog.index')
-            username = session['username']
-            # amount = int(2)*100
-            amount = request.form['totalprice']
-            client = razorpay.Client(auth=("rzp_test_YpuKMpzBvFaEqL", "g6zFdtaMQqCrP7Tqe4ipdnwx"))
-            payment = client.order.create({'amount': amount, 'currency': 'INR', 'payment_capture': '1'})
-            print(payment, file=sys.stderr)
-            return render_template('checkout.html', payment=payment, amount=amount)
-    else:
-        return redirect(url_for('blog.index'))
+            return redirect(url_for('additem.orderSummary'))
