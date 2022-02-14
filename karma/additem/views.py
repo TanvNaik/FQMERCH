@@ -172,6 +172,9 @@ def orderSummary():
         payment = client.order.create({'amount': int(amount), 'currency':'INR', 'payment_capture':'1'})
         print(payment)
         products = session['data']
+        
+        # if user['address']:
+        #     address = user['address']
         return render_template('pay.html', data=products, payment=payment, amount=amount, form=form)
     else:
         return redirect(url_for('blog.index'))
@@ -193,8 +196,6 @@ def address():
                 'alternatemobile': form.alternatemobile.data,
                 'state': form.state.data
             }
-            address['state'] = choice[int(address['state'])][int(address['state'])]
-            print(address['state'])
             db.child("users").child(userid).child("address").set(address)
             session['address'] = address['name']+","+address['landmark']+","+address['address']+","+address['state']+","+str(address['pincode'])
             return redirect(url_for('additem.orderSummary'))

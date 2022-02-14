@@ -26,7 +26,6 @@ def cart():
         return redirect(url_for('blog.index'))
 
 
-
 @shop.route('/wishList', methods=["POST","GET"])
 def wishList():
     if session['login']:
@@ -34,3 +33,5 @@ def wishList():
         return render_template('wishList.html', data = wldata)
     else:
         return  redirect(url_for('pages.login'))
+
+
