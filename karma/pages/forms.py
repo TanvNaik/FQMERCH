@@ -45,5 +45,6 @@ class AddressForm(FlaskForm):
     city = StringField("City", validators=[dr], render_kw={"placeholder": "City/District/Town"})
     landmark = StringField("Landmark", render_kw={"placeholder": "Landmark(optional)"})
     alternatemobile = StringField("Landmark", render_kw={"placeholder": "Alternate Mobile(optional)"})
-    state = SelectField("state", validators=[dr], render_kw={"placeholder": "State"}, choices=choice)
-    submit = SubmitField("ADD AND DELIVER HERE")
+    # state = SelectField("state", validators=[dr], render_kw={"placeholder": "State"}, choices=choice)
+    state = StringField("state", validators=[dr], render_kw={"placeholder": "State"})
+    submit = SubmitField("Proceed to checkout")
