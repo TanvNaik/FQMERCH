@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, url_for, session
-import razorpay
+import razorpay, sys
 from karma import app
 from karma.pages.forms import AddressForm
 
@@ -11,7 +11,7 @@ def pay():
         amount = int(2)*100
         client = razorpay.Client(auth=("rzp_test_aFHgpPQ2Qr3esy", "wJPj0PREZEPGzNTS25e4p4Ac"))
         payment = client.order.create({'amount': int(amount), 'currency':'INR', 'payment_capture':'1'})
-        print(payment)
+        print(payment, file= sys.stderr)
         return render_template('pay.html', form=form, payment=payment, amount=amount)
     else:
         return redirect(url_for('blog.index')) 
