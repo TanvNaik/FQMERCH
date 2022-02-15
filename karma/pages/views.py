@@ -50,6 +50,8 @@ def login():
         session['email'] = email
         session['login'] = True
         session['id'] = login['localId']
+        if( user['address'] != None):
+            session['address'] = user['address']['name']+","+ user['address']['address']+","+ user['address']['city'] + ',' +user['address']['state']+","+str(user['address']['pincode'])
         return redirect(url_for('blog.index'))
 
     return render_template('login.html', form=form)
