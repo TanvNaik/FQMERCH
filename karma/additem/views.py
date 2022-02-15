@@ -194,7 +194,8 @@ def orderSummary():
                 'razorpay_signature': razorpay_signature
             }
             data = client.payment.fetch(payment_id[0])
-            return render_template('success.html',data=data) 
+            db.child('cart').child(session['id']).remove()
+            return render_template('success.html',**data)
             # result = client.utility.verify_payment_signature(params_dict) 
             # if result is None:
             #     try:
