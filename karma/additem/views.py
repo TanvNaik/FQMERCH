@@ -4,7 +4,7 @@ from karma.pages.forms import AddressForm
 import razorpay
 from datetime import datetime
 import random,sys
-from karma.pages.forms import ProductForm, choice
+from karma.pages.forms import ProductForm
 from karma.pages.picture_handler import add_pic
 
 
@@ -51,9 +51,9 @@ def addtocart():
         productid = request.form['productid']
         userid = session['id']
         if request.form['movetocart']:
-            db.child("wishList").child(userid).child(productid).remove()
-        check = db.child("cart").child(userid).child(productid).get().val()
-        data = db.child("products").child(productid).get().val()
+            db.child("wishList").child(userid).child(productid).remove() 
+        check = db.child("cart").child(userid).child(productid).get().val() 
+        data = db.child("products").child(productid).get().val() 
         data['count'] = 1
         db.child("cart").child(userid).child(productid).set(data)
         data = db.child("cart").child(userid).get().val()
@@ -62,13 +62,14 @@ def addtocart():
             totalprice = int(0)
         totalprice = int(totalprice)
         if check == None:
-            totalprice += int(data[productid]["price"])
+            totalprice += int(data[productid]["price"]) 
 
         db.child("cart").child(userid).child("totalprice").set(totalprice)
         return redirect(url_for('shop.cart'))
 
     else:
         return redirect(url_for('blog.index'))
+
 
 # manage count of product in cart
 @additem.route('/incdecqty', methods=['POST','GET'])
@@ -136,6 +137,17 @@ def deleteFromWishList():
         return redirect(url_for('blog.index'))
 
 
+# @additem.route('/movetocart', methods=["POST","GET"])
+# def movetocart():
+#     if session['login']:
+#         productid = request.form['productid']
+#         userid = session['id']
+#         db.child("wishList").child(userid).child(productid).remove() 
+#         return redirect(url_for('shop.cart'))
+#     else:
+#         return redirect(url_for('blog.index'))
+
+
 @additem.route('/filter', methods=["POST","GET"])
 def filter():
     if session['login']:
@@ -163,19 +175,41 @@ def filterprice():
     else:
         return redirect(url_for('blog.index'))
 
+
 @additem.route('/orderSummary', methods=['POST','GET'])
 def orderSummary():
     if session['login']:
         form = AddressForm()
-        amount = int(2)*100
+        pay = request.form['payment']
+        amount = int(session['totalprice'])*100
         client = razorpay.Client(auth=("rzp_test_aFHgpPQ2Qr3esy", "wJPj0PREZEPGzNTS25e4p4Ac"))
-        payment = client.order.create({'amount': int(amount), 'currency':'INR', 'payment_capture':'1'})
-        print(payment)
-        products = session['data']
-        
-        # if user['address']:
-        #     address = user['address']
-        return render_template('pay.html', data=products, payment=payment, amount=amount, form=form)
+        if pay == "paymentpage":
+            payment_id = request.form['razorpay_payment_id'],
+            razorpay_order_id = request.form['razorpay_order_id'],
+            razorpay_signature = request.form['razorpay_signature']
+
+            params_dict = {
+                'razorpay_payment_id': payment_id,
+                'razorpay_order_id': razorpay_order_id,
+                'razorpay_signature': razorpay_signature
+            }
+            data = client.payment.fetch(payment_id[0])
+            return render_template('success.html',data=data) 
+            # result = client.utility.verify_payment_signature(params_dict) 
+            # if result is None:
+            #     try:
+            #         print(data)
+            #         client.payment.capture(payment_id, amount)
+            #         return render_template('success.html', data = data)
+            #     except:
+            #         return render_template('success.html', data = "fail")
+            # else:
+            #     return render_template('success.html', data = "fail")
+        else:
+            payment = client.order.create({'amount': amount, 'currency':'INR', 'payment_capture':'1'})
+            session['order_id'] = payment['id']
+            products = session['data']
+            return render_template('pay.html', data=products, payment=payment, form=form)
     else:
         return redirect(url_for('blog.index'))
 

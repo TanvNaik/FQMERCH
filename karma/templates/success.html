@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Payment Status</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if data != fail %}
+<div class="p-3">
+    <center>
+        <div class="btn btn-success"><h3>!! Payment Successfull !!</h3></div>
+    </center>
+</div>
+<div class="p-3">
+    <center>
+        <div class="btn btn-success"><a href="{{url_for('shop.cart')}}"><h3>Go Back To Cart</h3></a></div>
+    </center>
+</div>
+    <h3 class="p-3">
+        <center>{{data}}</center>
+    </h3>
+
+    {% else %}
+    <div class="p-3">
+        <center>
+            <h1 class="btn btn-danger p-3">!! Sorry Your Payment Failed Try Again !!</h1>
+        </center>
+    </div>
+    <div class="p-3">
+        <center>
+            <div class="btn btn-success"><a href="{{url_for('shop.cart')}}"><h3>Go Back To Cart</h3></a></div>
+        </center>
+    </div>
+    {% endif %}
+
+    {% endblock %}

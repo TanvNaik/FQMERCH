@@ -90,6 +90,9 @@
         </div>
         {% else %}
         <h3><center>You Don't Have any Product In Your Wish List</center></h3> <br> <br>
+        <div class="checkout_btn_inner d-flex justify-content-center">
+            <a class="btn btn-dark" href="{{url_for('blog.index')}}">CONTINUE SHOPPING</a>
+        </div>
         {% endif %}
     </section>
     <!--================End Cart Area =================-->

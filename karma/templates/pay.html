@@ -106,47 +106,6 @@
 
     <div class="collapse color-black " id="multiCollapseExample2">
         <div class="card card-body d-flex flex-column justify-content-center align-items-center">
-
-<!--        {% if session['address']%}-->
-<!--        <div class="form-div" style="width:70%">-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">Name</label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput" disabled value="{{name}}">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">Mobile</label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput1" disabled value="{{mobile}}">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">Pincode</label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput2" disabled value="{{pincode}}">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">Address</label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput3" disabled value="{{address}}">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">City</label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput4" disabled value="{{city}}">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">Landmark</label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput5" disabled value="{{landmark}}">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">Alternate Mobile No.-->
-<!--                </label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput6" disabled value="{{alternatemobile}}">-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="formGroupExampleInput" class="form-label">State</label>-->
-<!--                <input type="text" class="form-control" id="formGroupExampleInput7" disabled value="{{state}}">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--            <button class="btn btn-dark mb-2" >-->
-<!--            Proceed with this address-->
-<!--            </button>-->
-<!--        {% endif %}-->
         <p>
             <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Update new Address
@@ -209,10 +168,10 @@
     <div class="collapse multi-collapse" id="multiCollapseExample3">
         <div class="card card-body">
             <form action="{{url_for('additem.orderSummary')}}" class="d-flex justify-content-center"method="POST">
-
+                <input type="hidden" name="payment" value="paymentpage">
                 <script src="https://checkout.razorpay.com/v1/checkout.js" , data-key="rzp_test_aFHgpPQ2Qr3esy" ,
-                    data-amount="{{amount}}" , data-currency="INR" , data-order_id="{{payment['order_id']}}" ,
-                    data-name="Jaggu Bhai" , data-buttontext="Pay With Razorpay" , data-description="Pay Your Money Now"
+                    data-amount={{session['totalprice']}} , data-currency="INR" , data-order_id="{{payment['id']}}" ,
+                    data-name="Paying Using Razorpay" , data-buttontext="Pay With Razorpay" , data-description="Pay Your Bill"
                     , data-theme.color="#3399cc">
                 </script>
                 <input type="hidden" custom="Hidden Element" name="hidden">
