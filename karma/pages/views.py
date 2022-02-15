@@ -56,13 +56,6 @@ def login():
 
     return render_template('login.html', form=form)
 
-@pages.route('/tracking', methods=['POST','GET'])
-def tracking():
-    if session['login']:
-        return render_template('tracking.html')
-    else:
-        return redirect(url_for('blog.index'))
-
 @pages.route('/logout')
 def logout():
     session.clear()

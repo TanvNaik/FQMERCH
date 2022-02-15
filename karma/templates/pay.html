@@ -30,8 +30,8 @@
         </div>
         </div>
         <div class="collapse multi-collapse" id="multiCollapseExample1">
-
-            <div class="cart_inner">
+            <center>
+            <div class="cart_inner" style="width:60%;">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -42,10 +42,10 @@
                                 <th scope="col">Total</th>
                             </tr>
                         </thead>
+                        {% for items in data %}
+                        <center>
                         <tbody>
                             <!-- Row Start -->
-
-                        {% for items in data %}
                             <tr>
                                 <td>
                                     <div class="media">
@@ -86,8 +86,10 @@
 
 
                         </tbody>
+                    </center>
                     </table>
                 </div>
+            </center>
             </div>
         </div>
 </div>
@@ -116,7 +118,7 @@
             <div class="" style="width:100%">
                 <div class="login_form_inner pt-4" style="width=100%">
                     <h3>Address</h3>
-                    <form class="row login_form" action="{{url_for('additem.address')}}" method="POST" novalidate="novalidate">
+                    <form class="row login_form" action="{{url_for('payment.address')}}" method="POST" novalidate="novalidate">
                         {{ form.hidden_tag() }}
                         <div class="col-md-12 form-group">
                             {{ form.name(class="form-control") }}
@@ -167,7 +169,7 @@
         </div>
     <div class="collapse multi-collapse" id="multiCollapseExample3">
         <div class="card card-body">
-            <form action="{{url_for('additem.orderSummary')}}" class="d-flex justify-content-center"method="POST">
+            <form action="{{url_for('payment.orderSummary')}}" class="d-flex justify-content-center"method="POST">
                 <input type="hidden" name="payment" value="paymentpage">
                 <script src="https://checkout.razorpay.com/v1/checkout.js" , data-key="rzp_test_aFHgpPQ2Qr3esy" ,
                     data-amount={{session['totalprice']}} , data-currency="INR" , data-order_id="{{payment['id']}}" ,

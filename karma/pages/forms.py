@@ -48,3 +48,10 @@ class AddressForm(FlaskForm):
     # state = SelectField("state", validators=[dr], render_kw={"placeholder": "State"}, choices=choice)
     state = StringField("state", validators=[dr], render_kw={"placeholder": "State"})
     submit = SubmitField("ADD AND DELIVER HERE")
+
+
+class TrackingForm(FlaskForm):
+
+    orderid = StringField(validators=[dr], render_kw={"placeholder": "Order ID"})
+    email = StringField(render_kw={"placeholder": "Billing Email Address"})
+    submit = SubmitField("Track Order")

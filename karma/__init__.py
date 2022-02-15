@@ -44,11 +44,13 @@ from karma.shop.views import shop
 from karma.blog.views import blog
 from karma.pages.views import pages
 from karma.additem.views import additem
+from karma.payment.views import payment
 
 app.register_blueprint(shop)
 app.register_blueprint(blog)
 app.register_blueprint(pages)
 app.register_blueprint(additem)
+app.register_blueprint(payment)
 
 # @app.route('/')
 # def index():

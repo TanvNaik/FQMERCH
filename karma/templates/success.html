@@ -18,54 +18,62 @@
     <center>
         <div class="alert alert-success" role="alert" style="width:70%">
             <div class="alert alert-success" role="alert">
-                <div class="alert alert-warning" role="alert">
-  <p class="mb-0">Please note Order Id to track your order</p>
-</div>
-
-
-                <h4 class="alert-heading">Payment Successful!</h4>
-                  <br/>
-                <div class="row justify-content-center">
-                    <div class="col-auto">
-                        <table class="table table-responsive" >
-                            <tbody>
-                                <tr>
-                                    <td>Order Id:</td>
-                                    <td>{{order_id}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Payment Method:</td>
-                                    <td>{{method}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Amount:</td>
-                                    <td>&#8377;{{amount}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td>{{email}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Contact Number:</td>
-                                    <td>{{contact}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="alert alert-warning" role="alert">
+                        <p class="mb-0">Please note Order Id to track your order</p>
                     </div>
-                </div>
 
+
+                    <h4 class="alert-heading">Payment Successful!</h4>
+                    <br />
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <table class="table table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td>Order Id:</td>
+                                        <td>{{order_id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Id:</td>
+                                        <td>{{id}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Method:</td>
+                                        <td>{{method}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Payment Status:</td>
+                                        <td>Success</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount:</td>
+                                        <td>&#8377;{{amount/100}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email:</td>
+                                        <td>{{email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Contact Number:</td>
+                                        <td>{{contact}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
     </center>
 </div>
 
 
-    {% endif %}
+{% endif %}
 <div class="p-3">
-        <center>
-            <div >
-                <button type="submit"  class="primary-btn">Continue Shopping</button>
-            </div>
-        </center>
-    </div>
-    {% endblock %}
+    <center>
+        <div class="checkout_btn_inner d-flex justify-content-center">
+            <a class="btn btn-dark" href="{{url_for('blog.index')}}">CONTINUE SHOPPING</a>
+        </div>
+    </center>
+</div>
+{% endblock %}
