@@ -4189,6 +4189,28 @@ label {
   height: 80px;
 }
 
+/* .track_table {
+  width:60%;
+  background-color: #28d500;
+}  */
+
+.trackingtable {
+  width: 60%;
+}
+
+@media only screen and (max-width:768px) {
+  .trackingtable {
+    width: 100%;
+  }
+  .trackingtable h4{
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .cart_image{
+    height: 50px;
+    width: 30px;
+  }
+} 
 .cart_inner .table thead tr th {
   border-top: 0px;
   font-size: 14px;
@@ -4673,6 +4695,9 @@ label {
 .order_d_inner .details_item .list {
   padding-left: 18px; }
   @media (min-width: 767px) {
+    .track_table {
+      width:100%;
+    }
     .order_d_inner .details_item .list {
       margin-bottom: 30px; } }
   .order_d_inner .details_item .list li {
