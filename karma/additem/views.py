@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, url_for, json, session, jsonify, r
 from karma import db
 from datetime import datetime
 import random,sys
-from karma.pages.forms import ProductForm
+from karma.pages.forms import ProductForm, HotDealsProduct
 from karma.pages.picture_handler import add_pic
 
 
@@ -39,6 +39,36 @@ def add():
 
             db.child("products").child(id).set(item)
         return render_template('product.html', form=form)
+    else:
+        return redirect(url_for('blog.index'))
+
+@additem.route('/addHotDealsProduct', methods=["POST","GET"])
+def addHotDealsProduct():
+    if session['login']:
+        form = HotDealsProduct()
+        if form.validate_on_submit():
+            now = datetime.now()
+            now = str(now.strftime("%S%M%H%d%m%Y"))
+            item = {
+                'productcategory' : "Hot deals",
+                'productname' : form.productname.data,
+                'price' : form.price.data,
+                'originalprice' : form.originalprice.data,
+                'stock' : form.stock.data,
+                'type':form.producttype.data,
+                'image' : form.image.data,
+                'time': now,
+                "releaseDate": json.dumps(form.releaseDate.data)
+            }
+            if form.image.data:
+                pic = add_pic(form.image.data, form.productname.data)
+            picture = url_for('static', filename='category/'+pic)
+            item['image'] = picture
+            id = random.randint(100000, 1000000000)
+            print(json.dumps(form.releaseDate.data), file=sys.stderr)
+            print("inside addhotdealsproduct", file=sys.stderr)
+            db.child("hotdealsproduct").child(id).set(item)
+        return render_template('hotdealsproduct.html', form=form)
     else:
         return redirect(url_for('blog.index'))
 

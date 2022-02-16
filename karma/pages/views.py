@@ -1,3 +1,5 @@
+import sys
+
 from flask import render_template, redirect, url_for, session, jsonify, Blueprint
 from karma.pages.forms import RegisterForm, LoginForm
 from karma import db, auth
@@ -41,10 +43,15 @@ def register():
 @pages.route('/login', methods=['POST','GET'])
 def login():
     form = LoginForm()
+
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        login = auth.sign_in_with_email_and_password(email, password)
+        try:
+            login = auth.sign_in_with_email_and_password(email, password)
+        except:
+            return render_template('login.html', form=form, error = "Bad credentials. Please try again")
+
         user = db.child("users").child(login['localId']).get().val()
         session['username'] = user['username']
         session['email'] = email
@@ -54,7 +61,8 @@ def login():
             session['address'] = user['address']['name']+","+ user['address']['address']+","+ user['address']['city'] + ',' +user['address']['state']+","+str(user['address']['pincode'])
         return redirect(url_for('blog.index'))
 
-    return render_template('login.html', form=form)
+
+    return render_template('login.html', form=form, error=None)
 
 @pages.route('/logout')
 def logout():
