@@ -16,9 +16,10 @@ def cart():
     if session['login']:
         userid = session['id']
         data = db.child("cart").child(session['id']).get().val()
+        totalprice = data['totalprice']
+        print(totalprice)
         if data:
             data.pop("totalprice")
-        totalprice = db.child("cart").child(userid).child("totalprice").get().val()
         session['data'] = data
         session['totalprice'] = totalprice
         return render_template('cart.html', data = data, totalprice=totalprice)

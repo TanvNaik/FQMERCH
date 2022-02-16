@@ -65,8 +65,8 @@ def addHotDealsProduct():
             picture = url_for('static', filename='category/'+pic)
             item['image'] = picture
             id = random.randint(100000, 1000000000)
-            print(json.dumps(form.releaseDate.data), file=sys.stderr)
-            print("inside addhotdealsproduct", file=sys.stderr)
+            # print(json.dumps(form.releaseDate.data), file=sys.stderr)
+            # print("inside addhotdealsproduct", file=sys.stderr)
             db.child("hotdealsproduct").child(id).set(item)
         return render_template('hotdealsproduct.html', form=form)
     else:
@@ -76,8 +76,6 @@ def addHotDealsProduct():
 @additem.route('/addtocart', methods=["POST","GET"])
 def addtocart():
     if session['login']:
-
-
         productid = request.form['productid']
         userid = session['id']
         if request.form['movetocart']:
@@ -87,17 +85,24 @@ def addtocart():
             data = db.child("hotdealsproduct").child(productid).get().val()
         else:
             data = db.child("products").child(productid).get().val()
-        data['count'] = 1
-        db.child("cart").child(userid).child(productid).set(data)
-        data = db.child("cart").child(userid).get().val()
+        productdata = db.child("products").child(productid).get().val()
         totalprice = db.child("cart").child(userid).child("totalprice").get().val()
         if totalprice == None: 
             totalprice = int(0)
         totalprice = int(totalprice)
         if check == None:
-            totalprice += int(data[productid]["price"]) 
-
-        db.child("cart").child(userid).child("totalprice").set(totalprice)
+            totalprice += int(productdata["price"]) 
+        productdata['count'] = 1
+        data2 = db.child("cart").child(userid).get().val()
+        if data2 is not None:
+            data2[productid] = productdata
+            data2['totalprice'] = totalprice
+            db.child("cart").child(userid).set(data2)
+        else:
+            mydata = {}
+            mydata[productid] = productdata
+            mydata['totalprice'] = totalprice
+            db.child("cart").child(userid).set(mydata)
         return redirect(url_for('shop.cart'))
 
     else:
@@ -135,10 +140,10 @@ def deletefromcart():
         totalprice = db.child("cart").child(userid).child("totalprice").get().val()
         data = db.child("cart").child(userid).get().val()
         db.child("cart").child(userid).child(productid).remove()
-        if totalprice == None: 
-            totalprice = int(0)
+        # if totalprice == None: 
+        #     totalprice = int(0)
         totalprice = int(totalprice)
-        totalprice -= int(data[productid]["price"])
+        totalprice -= int(data[productid]["price"])*data[productid]["count"]
 
         db.child("cart").child(userid).child("totalprice").set(totalprice)
         return redirect(url_for('shop.cart'))

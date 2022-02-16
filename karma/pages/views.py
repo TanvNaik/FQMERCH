@@ -24,12 +24,13 @@ def create_bcrypt_hash(password):
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        encrypted_password = create_bcrypt_hash(form.password.data)
+        # encrypted_password = create_bcrypt_hash(form.password.data)
         user = {
             'username' : form.username.data,
             'email' : form.email.data,
-            'password' : encrypted_password,
-            'confirmpassword' : form.confirmpassword.data
+            'password' : form.password.data,
+            'confirmpassword' : form.confirmpassword.data,
+            'address' : form.address.data,
         }
 
         users = auth.create_user_with_email_and_password(user['email'], user['password'])
@@ -47,10 +48,10 @@ def login():
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        try:
-            login = auth.sign_in_with_email_and_password(email, password)
-        except:
-            return render_template('login.html', form=form, error = "Bad credentials. Please try again")
+        # try:
+        login = auth.sign_in_with_email_and_password(email, password)
+        # except:
+            # return render_template('login.html', form=form, error = "Bad credentials. Please try again")
 
         user = db.child("users").child(login['localId']).get().val()
         session['username'] = user['username']
@@ -58,7 +59,8 @@ def login():
         session['login'] = True
         session['id'] = login['localId']
         if( user['address'] != None):
-            session['address'] = user['address']['name']+","+ user['address']['address']+","+ user['address']['city'] + ',' +user['address']['state']+","+str(user['address']['pincode'])
+            # session['address'] = user['address']['name']+","+ user['address']['address']+","+ user['address']['city'] + ',' +user['address']['state']+","+str(user['address']['pincode'])
+            session['address'] = user['address']
         return redirect(url_for('blog.index'))
 
 

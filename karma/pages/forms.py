@@ -15,7 +15,6 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 class RegisterForm(FlaskForm):
-    name = StringField("Name", validators=[dr], render_kw={"placeholder": "Name"})
     username = StringField("Username", validators=[dr], render_kw={"placeholder": "Username"})
     email = EmailField("Email", validators=[dr], render_kw={"placeholder": "Email"})
     address = TextAreaField("Address", validators=[dr], render_kw={"placeholder": "Address"})

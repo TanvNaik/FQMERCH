@@ -18,8 +18,9 @@ def singleblog():
 
 @blog.route('/') 
 def index():
-    if session['id'] == None:
-        session['login'] = False
+    # commented due to this error was coming because when we just start the project how id key will be come in session as session is empty in starting
+    # if session['id'] == None:
+    #     session['login'] = False
     filename = os.path.join(app.static_folder, 'json/feature.json') 
     f = open(filename) 
     file = json.load(f) 
