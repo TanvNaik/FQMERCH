@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, url_for, json, session, jsonify, r
 from karma import db
 from datetime import datetime
 import random,sys
-from karma.pages.forms import ProductForm
+from karma.pages.forms import ProductForm, HotDealsProduct
 from karma.pages.picture_handler import add_pic
 
 
@@ -42,16 +42,51 @@ def add():
     else:
         return redirect(url_for('blog.index'))
 
+@additem.route('/addHotDealsProduct', methods=["POST","GET"])
+def addHotDealsProduct():
+    if session['login']:
+        form = HotDealsProduct()
+        if form.validate_on_submit():
+            now = datetime.now()
+            now = str(now.strftime("%S%M%H%d%m%Y"))
+            item = {
+                'productcategory' : "Hot deals",
+                'productname' : form.productname.data,
+                'price' : form.price.data,
+                'originalprice' : form.originalprice.data,
+                'stock' : form.stock.data,
+                'type':form.producttype.data,
+                'image' : form.image.data,
+                'time': now,
+                "releaseDate": json.dumps(form.releaseDate.data)
+            }
+            if form.image.data:
+                pic = add_pic(form.image.data, form.productname.data)
+            picture = url_for('static', filename='category/'+pic)
+            item['image'] = picture
+            id = random.randint(100000, 1000000000)
+            print(json.dumps(form.releaseDate.data), file=sys.stderr)
+            print("inside addhotdealsproduct", file=sys.stderr)
+            db.child("hotdealsproduct").child(id).set(item)
+        return render_template('hotdealsproduct.html', form=form)
+    else:
+        return redirect(url_for('blog.index'))
+
 
 @additem.route('/addtocart', methods=["POST","GET"])
 def addtocart():
     if session['login']:
+
+
         productid = request.form['productid']
         userid = session['id']
         if request.form['movetocart']:
-            db.child("wishList").child(userid).child(productid).remove() 
-        check = db.child("cart").child(userid).child(productid).get().val() 
-        data = db.child("products").child(productid).get().val() 
+            db.child("wishList").child(userid).child(productid).remove()
+        check = db.child("cart").child(userid).child(productid).get().val()
+        if request.form['hotdealsproduct']:
+            data = db.child("hotdealsproduct").child(productid).get().val()
+        else:
+            data = db.child("products").child(productid).get().val()
         data['count'] = 1
         db.child("cart").child(userid).child(productid).set(data)
         data = db.child("cart").child(userid).get().val()
@@ -66,7 +101,7 @@ def addtocart():
         return redirect(url_for('shop.cart'))
 
     else:
-        return redirect(url_for('blog.index'))
+        return redirect(url_for('pages.login'))
 
 
 # manage count of product in cart
@@ -121,7 +156,7 @@ def addToWishList():
         return redirect(url_for('shop.wishList'))
 
     else:
-        return redirect(url_for('blog.index'))
+        return redirect(url_for('pages.login'))
 
 @additem.route('/deleteFromWishList', methods=['POST','GET'])
 def deleteFromWishList():

@@ -27,7 +27,7 @@ def orderSummary():
             data['is_delivered'] = False
             data['products'] = session['data']
             db.child('order').child(session['id']).child(data['order_id']).set(data)
-            # db.child('cart').child(session['id']).remove()
+            db.child('cart').child(session['id']).remove()
             return render_template('success.html',**data)
             # result = client.utility.verify_payment_signature(params_dict) 
             # if result is None:
