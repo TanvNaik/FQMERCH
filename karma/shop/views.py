@@ -23,7 +23,7 @@ def cart():
         session['totalprice'] = totalprice
         return render_template('cart.html', data = data, totalprice=totalprice)
     else:
-        return redirect(url_for('blog.index'))
+        return redirect(url_for('pages.login'))
 
 
 @shop.route('/wishList', methods=["POST","GET"])

@@ -42,7 +42,7 @@ class HotDealsProduct(FlaskForm):
     originalprice = IntegerField("originalprice", validators=[dr], render_kw={"placeholder": "Product Original Price"})
     stock = IntegerField("stock", validators=[dr], render_kw={"placeholder": "Product Stock"})
     image = FileField('Product Image', validators=[dr, FileAllowed(['jpg', 'png', 'jpeg'])])
-    releaseDate = DateTimeLocalField("Release Date", render_kw={'placeholder': 'Release Date'})
+    releaseDate = DateTimeLocalField("Release Date", render_kw={'placeholder': 'Release Date'}, format='%Y-%m-%dT%H:%M')
     submit = SubmitField("Add Product")
 
 

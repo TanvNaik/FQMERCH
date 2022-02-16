@@ -76,12 +76,17 @@ def addHotDealsProduct():
 @additem.route('/addtocart', methods=["POST","GET"])
 def addtocart():
     if session['login']:
+
+
         productid = request.form['productid']
         userid = session['id']
         if request.form['movetocart']:
-            db.child("wishList").child(userid).child(productid).remove() 
-        check = db.child("cart").child(userid).child(productid).get().val() 
-        data = db.child("products").child(productid).get().val() 
+            db.child("wishList").child(userid).child(productid).remove()
+        check = db.child("cart").child(userid).child(productid).get().val()
+        if request.form['hotdealsproduct']:
+            data = db.child("hotdealsproduct").child(productid).get().val()
+        else:
+            data = db.child("products").child(productid).get().val()
         data['count'] = 1
         db.child("cart").child(userid).child(productid).set(data)
         data = db.child("cart").child(userid).get().val()
@@ -96,7 +101,7 @@ def addtocart():
         return redirect(url_for('shop.cart'))
 
     else:
-        return redirect(url_for('blog.index'))
+        return redirect(url_for('pages.login'))
 
 
 # manage count of product in cart
@@ -151,7 +156,7 @@ def addToWishList():
         return redirect(url_for('shop.wishList'))
 
     else:
-        return redirect(url_for('blog.index'))
+        return redirect(url_for('pages.login'))
 
 @additem.route('/deleteFromWishList', methods=['POST','GET'])
 def deleteFromWishList():
