@@ -127,6 +127,7 @@
                                     novalidate="novalidate">
                                     <input type="hidden" name="payment" value="notpaymentpage">
                                     {{ form.hidden_tag() }}
+                                    {{form.payment(value="")}}
                                     <div class="col-md-12 form-group">
                                         {{ form.name(class="form-control") }}
                                     </div>
@@ -177,7 +178,7 @@
         <center>
             <div class="trackingtable">
                 <div class="card card-body">
-                    <form action="{{url_for('payment.orderSummary')}}" class="d-flex justify-content-center"
+                    <form action="{{url_for('payment.pay')}}" class="d-flex justify-content-center"
                         method="POST">
                         <input type="hidden" name="payment" value="paymentpage">
                         <script src="https://checkout.razorpay.com/v1/checkout.js" , data-key="rzp_test_aFHgpPQ2Qr3esy"

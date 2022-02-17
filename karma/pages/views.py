@@ -48,22 +48,21 @@ def login():
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        # try:
-        login = auth.sign_in_with_email_and_password(email, password)
-        # except:
-            # return render_template('login.html', form=form, error = "Bad credentials. Please try again")
-
-        user = db.child("users").child(login['localId']).get().val()
-        session['username'] = user['username']
-        session['email'] = email
-        session['login'] = True
-        session['id'] = login['localId']
-        if( user['address'] != None):
-            # session['address'] = user['address']['name']+","+ user['address']['address']+","+ user['address']['city'] + ',' +user['address']['state']+","+str(user['address']['pincode'])
-            session['address'] = user['address']
-        return redirect(url_for('blog.index'))
-
-
+        try:
+            login = auth.sign_in_with_email_and_password(email, password)
+            user = db.child("users").child(login['localId']).get().val()
+            session['username'] = user['username']
+            session['email'] = email
+            session['login'] = True
+            session['id'] = login['localId']
+            if (user['address'] != None):
+                # formatting address in session to display it in ordersummary page
+                session['address'] = user['address']['name'] + "," + user['address']['address'] + "," + user['address'][
+                    'city'] + ',' + user['address']['state'] + "," + str(user['address']['pincode'])
+                # session['address'] = user['address']
+            return redirect(url_for('blog.index'))
+        except:
+            return render_template('login.html', form=form, error = "Bad credentials. Please try again")
     return render_template('login.html', form=form, error=None)
 
 @pages.route('/logout')
