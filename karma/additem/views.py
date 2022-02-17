@@ -81,10 +81,10 @@ def addtocart():
         if request.form['movetocart']:
             db.child("wishList").child(userid).child(productid).remove()
         check = db.child("cart").child(userid).child(productid).get().val()
-        if request.form['hotdealsproduct']:
-            data = db.child("hotdealsproduct").child(productid).get().val()
-        else:
-            data = db.child("products").child(productid).get().val()
+        # if request.form['hotdealsproduct']:
+        #     data = db.child("hotdealsproduct").child(productid).get().val()
+        # else:
+        #     data = db.child("products").child(productid).get().val()
         productdata = db.child("products").child(productid).get().val()
         totalprice = db.child("cart").child(userid).child("totalprice").get().val()
         if totalprice == None: 

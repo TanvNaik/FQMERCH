@@ -182,7 +182,7 @@
                         method="POST">
                         <input type="hidden" name="payment" value="paymentpage">
                         <script src="https://checkout.razorpay.com/v1/checkout.js" , data-key="rzp_test_aFHgpPQ2Qr3esy"
-                            , data-amount={{session['totalprice']}} , data-currency="INR" ,
+                            , data-amount={{session['totalprice']*100}} , data-currency="INR" ,
                             data-order_id="{{payment['id']}}" , data-name="Paying Using Razorpay" ,
                             data-buttontext="Pay With Razorpay" , data-description="Pay Your Bill" ,
                             data-theme.color="#3399cc">

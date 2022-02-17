@@ -11,7 +11,7 @@ def orderSummary():
     if session['login']:
         form = AddressForm()
         # pay = request.form['payment']
-        amount = int(session['totalprice'])
+        amount = int(session['totalprice'])*100
         client = razorpay.Client(auth=("rzp_test_aFHgpPQ2Qr3esy", "wJPj0PREZEPGzNTS25e4p4Ac"))
         # if pay == "paymentpage":
         payment = client.order.create({'amount': amount, 'currency':'INR', 'payment_capture':'1'})
