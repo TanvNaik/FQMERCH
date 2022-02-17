@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import  DataRequired, EqualTo
-from wtforms import StringField, SubmitField, PasswordField, IntegerField, TextAreaField, SelectField, EmailField, DateTimeLocalField
+from wtforms import StringField, SubmitField, PasswordField, IntegerField, TextAreaField, SelectField, EmailField, DateTimeLocalField, HiddenField
 from flask_wtf.file import FileField, FileAllowed
 
 
@@ -49,8 +49,9 @@ class AddressForm(FlaskForm):
 
     name = StringField("Name", validators=[dr], render_kw={"placeholder": "Name"})
     mobile = StringField("Mobile", validators=[dr], render_kw={"placeholder": "Mobile Number"})
+    payment = HiddenField("payment")
     pincode = IntegerField("Pincode",validators=[dr], render_kw={"placeholder": "Pin Code"})
-    address = TextAreaField("Mobile", validators=[dr], render_kw={"placeholder": "Address"})
+    address = TextAreaField("address", validators=[dr], render_kw={"placeholder": "Address"})
     city = StringField("City", validators=[dr], render_kw={"placeholder": "City/District/Town"})
     landmark = StringField("Landmark", render_kw={"placeholder": "Landmark(optional)"})
     alternatemobile = StringField("Landmark", render_kw={"placeholder": "Alternate Mobile(optional)"})
