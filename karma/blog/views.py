@@ -28,16 +28,18 @@ def index():
     hotdealsproductfromDB = db.child('hotdealsproduct').get().val()
     unpackedproduct = {}
     hotdealsid = ""
+    hotdealsproducts = {}
     for key,value in hotdealsproductfromDB.items():
-        unpackedproduct = value
-        hotdealsid = key
-    hotdealsproduct = {
-        'hotdealsimage' : unpackedproduct['image'],
-        'hotdealsname': unpackedproduct['productname'],
-        'hotdealsprice': unpackedproduct['price'],
-        'hotdealsoriginalprice': unpackedproduct['originalprice'],
-        'hotdealsreleasedate': unpackedproduct['releaseDate']
-    }
-    return render_template('index.html', data=file , hotdealsid = hotdealsid , **hotdealsproduct, products=products)
+        for keyinner, valueinner in value.items():
+            hotdealsproducts[keyinner] = valueinner
+    #     hotdealsid = key
+    # hotdealsproduct = {
+    #     'hotdealsimage' : unpackedproduct['image'],
+    #     'hotdealsname': unpackedproduct['productname'],
+    #     'hotdealsprice': unpackedproduct['price'],
+    #     'hotdealsoriginalprice': unpackedproduct['originalprice'],
+    #     'hotdealsreleasedate': unpackedproduct['releaseDate']
+    # }
+    return render_template('index.html', data=file , hotdealsproducts = hotdealsproductfromDB, products=products)
 
     
