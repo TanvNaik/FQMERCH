@@ -58,7 +58,7 @@ def addHotDealsProduct():
                 'type':form.producttype.data,
                 'image' : form.image.data,
                 'time': now,
-                "releaseDate": json.dumps(form.releaseDate.data)
+                "endDate": json.dumps(form.endDate.data)
             }
             if form.image.data:
                 pic = add_pic(form.image.data, form.productname.data)
