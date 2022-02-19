@@ -1,3 +1,5 @@
+import sys
+
 from flask import render_template, Blueprint, url_for, jsonify, session, request, redirect
 from karma import db
 import razorpay
@@ -36,7 +38,36 @@ def pay():
     data['is_delivered'] = False
     data['products'] = session['data']
     db.child('order').child(session['id']).child(data['order_id']).set(data)
-    db.child('cart').child(session['id']).remove()
+    productids = {}
+    allproducts = db.child('products').get().val()
+    newproducts = {}
+    # for key,value in data['products'].items():
+    #     if value['category'] == "Hot deals":
+    #         productids['hotdeals'] = key
+    #     else:
+    #         productids['normal'] = key
+    #
+    # for key1,value1 in allproducts.items():
+    #     newproduct={}
+    #     print(f'prod key {key1}', file=sys.stderr)
+    #     for key, value in data['products'].items():
+    #        print(f'data key {key}', file=sys.stderr)
+    #        if(key1 == key):
+    #            newproduct = value1
+    #            newproduct['stock'] -= value['count']
+    #            newproducts[key1] = newproduct
+    #        else:
+    #            newproduct[key1] = value1
+    # print(f'newProducts {newproducts}', file=sys.stderr)
+    # db.child('products').set(newproducts)
+
+
+    # for key, value in productids:
+    #     if key == "normal":
+    #         db.child('products').child(value).update({'stock'})
+    #     else:
+    #         db.child('hotdealsproducts').child(value).update({'stock'})
+    # db.child('cart').child(session['id']).remove()
     return render_template('success.html', **data)
     # result = client.utility.verify_payment_signature(params_dict)
     # if result is None:
