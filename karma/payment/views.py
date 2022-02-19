@@ -38,9 +38,11 @@ def pay():
     data['is_delivered'] = False
     data['products'] = session['data']
     db.child('order').child(session['id']).child(data['order_id']).set(data)
-    productids = {}
-    allproducts = db.child('products').get().val()
-    newproducts = {}
+    orderdata = session['data']
+    for id in orderdata:
+        stock = orderdata[id]['stock'] - orderdata[id]['count']
+        db.child("products").child(id).update({"stock":stock})
+        print(id)
     # for key,value in data['products'].items():
     #     if value['category'] == "Hot deals":
     #         productids['hotdeals'] = key
