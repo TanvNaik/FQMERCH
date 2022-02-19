@@ -41,6 +41,7 @@ def pay():
     orderdata = session['data']
     for id in orderdata:
         stock = orderdata[id]['stock'] - orderdata[id]['count']
+        print(stock)
         db.child("products").child(id).update({"stock":stock})
         print(id)
     # for key,value in data['products'].items():
