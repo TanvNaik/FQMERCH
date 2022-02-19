@@ -4,11 +4,8 @@ import os
 import pyrebase
 
 
-
-
 sender_email = os.environ.get('senderEmail')
 email_pass = os.environ.get('emailPass')
-
 
 
 firebaseConfiguration = {
