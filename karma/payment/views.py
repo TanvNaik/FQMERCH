@@ -69,7 +69,8 @@ def pay():
     #         db.child('products').child(value).update({'stock'})
     #     else:
     #         db.child('hotdealsproducts').child(value).update({'stock'})
-    # db.child('cart').child(session['id']).remove()
+    session.pop('data', None)
+    db.child('cart').child(session['id']).remove()
     return render_template('success.html', **data)
     # result = client.utility.verify_payment_signature(params_dict)
     # if result is None:
