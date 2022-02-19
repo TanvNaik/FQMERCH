@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, session
+from flask import Flask, render_template, request, url_for, session, redirect
 import smtplib
 import os 
 import pyrebase
@@ -80,6 +80,6 @@ def subscribe():
         return render_template('contact.html')
 
     else:
-        send_email(sender_email, email_pass, email, "ThankYou", "Thankyou For subscribing NewsLetter")
-        return render_template('index.html')
+        send_email("info@stackx.online", "StackX@123", email, "ThankYou", "Thankyou For subscribing NewsLetter")
+        return redirect(url_for("blog.index"))
 
